@@ -1,4 +1,4 @@
-#include "../Header_Files/Object.h"
+#include "../Headers/Object.h"
 
 Object::Object() : name("Unknown"), tag("Unknown") {
 }
