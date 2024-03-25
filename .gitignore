@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+*.bin
+
+# block some MacOS trash
+.DS_Store
+.AppleDouble
+._*
