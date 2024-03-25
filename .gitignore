@@ -36,3 +36,6 @@
 .DS_Store
 .AppleDouble
 ._*
+
+# block some Windows trash
+[Dd]esktop.ini
