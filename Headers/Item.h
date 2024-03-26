@@ -1,7 +1,7 @@
 #ifndef Item
 #define Item
 
-#include <bits/stdc++.h>
+#include <iostream>
 
 #include "Object.h"
 using namespace std;
@@ -13,7 +13,6 @@ public:
     const int getHealth() const;
     const int getAttack() const;
     const int getDefense() const;
-
 private:
     int health;
     int attack;
@@ -29,7 +28,6 @@ public:
     const int getThirsty() const;
     const int getPoisonous() const;
     const bool isAntinode() const;
-
 private:
     int health;
     int hunger;

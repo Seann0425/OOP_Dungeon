@@ -1,6 +1,6 @@
 #ifndef GC
 #define GC
-#include <bits/stdc++.h>
+#include <iostream>
 
 #include "Object.h"
 using namespace std;
