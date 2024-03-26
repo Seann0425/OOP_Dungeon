@@ -1,9 +1,11 @@
 #include <iostream>
 
+#include "../Headers/GraphicManager.h"
 #include "../Headers/Item.h"
 using namespace std;
 
 int main() {
-    cout << "this is the start of the adventure" << endl;
+    // initGraphic();
+    displayMenu();
     return 0;
 }
