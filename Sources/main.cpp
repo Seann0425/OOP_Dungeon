@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+
+#include "../Headers/Item.h"
 using namespace std;
 
 int main() {
