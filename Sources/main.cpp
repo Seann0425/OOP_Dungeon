@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    // initGraphic();
+    initGraphic();
     displayMenu();
     return 0;
 }
