@@ -22,6 +22,9 @@ void GameCharacter::gotHealed(int amount) {
     }
     currentHealth += amount;
 }
+const bool GameCharacter::checkDead() const {
+    return currentHealth == 0;
+}
 const int GameCharacter::getMaxHealth() const {
     return this->maxHealth;
 }
