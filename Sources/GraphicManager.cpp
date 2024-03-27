@@ -8,7 +8,6 @@ void initGraphic() {
     initscr();
     raw();
     noecho();
-    keypad(stdscr, true);
     printw("Press the key R when you are ready to play the game with current window size.\n");
     int input;
     while ((input = getch()) != static_cast<int>('r')) {
@@ -17,7 +16,7 @@ void initGraphic() {
     clear();
     refresh();
 }
-void displayMenu() {
+const int displayMenu() {
     int x_max, y_max;
     getmaxyx(stdscr, y_max, x_max);
     WINDOW* menu = newwin(20, 80, y_max / 2 - 5, x_max / 2 - 35);
@@ -56,25 +55,74 @@ void displayMenu() {
             default:
                 break;
         }
-        if (choice == 10) {
-            if (curButton == 2) {
-                endwin();
-                return;
-            }
-            int x, y;
-            getyx(stdscr, y, x);
-            std::string tmp = "You choose ";
-            tmp.append(options[curButton]);
-            mvwprintw(stdscr, y, x, tmp.c_str());
-            refresh();
-            break;
+        if (choice == 10) break;
+    }
+    wclear(menu);
+    wrefresh(menu);
+    delwin(menu);
+    return static_cast<int>(curButton);
+}
+
+const int chooseDifficulty() {
+    // haven't implemented it
+    printw("This feature will be updated soon\n");
+    printw("Press any key to leave\n");
+    refresh();
+    getch();
+    clear();
+    return -1;
+}
+
+const std::string readString(WINDOW* curWindow) {
+    // read only readable character
+    //  character count limit could be implemented
+    int x_origin, y_origin, x_cur, y_cur;
+    getyx(curWindow, y_origin, x_origin);
+    y_cur = y_origin;
+    x_cur = x_origin;
+    std::string input = "";
+    nocbreak();
+    int ch;
+    keypad(curWindow, false);
+    while ((ch = wgetch(curWindow)) != '\n') {
+        if (ch >= 32 && ch <= 126) {
+            input.push_back(ch);
+            mvwaddch(curWindow, y_cur, x_cur, ch);
+            x_cur++;
+        } else if (ch == 8 && x_cur > x_origin) {
+            input.pop_back();
+            x_cur--;
+            mvwaddch(curWindow, y_cur, x_cur, 32);  // 32 = space
         }
     }
-
-    // make the program not to stop for now
-    getch();
-    endwin();
+    getyx(curWindow, y_cur, x_cur);
+    while (x_cur >= x_origin) {
+        mvwaddch(curWindow, y_cur, x_cur, ' ');
+        x_cur--;
+    }
+    cbreak();
+    return input;
 }
+
+const std::string inputPlayerName() {
+    int x_max, y_max;
+    getmaxyx(stdscr, y_max, x_max);
+    WINDOW* field = newwin(3, x_max, y_max / 2, 0);
+    box(field, 0, 0);
+    mvwprintw(field, 0, 0, "Please enter your name");
+    wmove(field, 1, 1);
+    std::string name = readString(field);
+    wclear(field);
+    std::string msg = "Your name is " + name + "\n";
+    mvwprintw(field, 0, 0, msg.c_str());
+    mvwprintw(field, 1, 0, "Press any key to leave");
+    wgetch(field);
+    wclear(field);
+    wrefresh(field);
+    delwin(field);
+    return name;
+}
+
 void endGraphic() {
     endwin();
 }

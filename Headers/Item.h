@@ -4,12 +4,11 @@
 #include <iostream>
 
 #include "Object.h"
-using namespace std;
 
 class Equipment : public Object {
 public:
     Equipment();
-    Equipment(string, int, int, int);
+    Equipment(std::string, int, int, int);
     const int getHealth() const;
     const int getAttack() const;
     const int getDefense() const;
@@ -22,7 +21,7 @@ private:
 class Consumable : public Object {
 public:
     Consumable();
-    Consumable(string, int, int, int, int, bool);
+    Consumable(std::string, int, int, int, int, bool);
     const int getHealth() const;
     const int getHunger() const;
     const int getThirsty() const;

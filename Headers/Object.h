@@ -2,17 +2,16 @@
 #define OBJECT
 
 #include <iostream>
-using namespace std;
 
 class Object {
 public:
     Object();
-    Object(string, string);
-    const string getName() const;
-    const string getTag() const;
-private:
-    string name;
-    string tag;
+    Object(std::string, std::string);
+    const std::string getName() const;
+    const std::string getTag() const;
+protected:
+    std::string name;
+    std::string tag;
 };
 
 #endif

@@ -3,12 +3,11 @@
 #include <iostream>
 
 #include "Object.h"
-using namespace std;
 
 class GameCharacter : public Object {
 public:
     GameCharacter();
-    GameCharacter(string, string, int, int, int, int);
+    GameCharacter(std::string, std::string, int, int, int, int);
     const bool checkDead() const;
     void takeDamage(int);
     void gotHealed(int);
@@ -16,7 +15,7 @@ public:
     const int getCurrentHealth() const;
     const int getAttack() const;
     const int getDefense() const;
-private:
+protected:
     int maxHealth;
     int currentHealth;
     int attack;
