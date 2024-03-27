@@ -3,7 +3,8 @@
 // definition of equipment
 Equipment::Equipment() : Object(), health(0), attack(0), defense(0) {
 }
-Equipment::Equipment(string name, int health, int attack, int defense) : Object(name, "Equipment"), health(health), attack(attack), defense(defense) {
+Equipment::Equipment(std::string name, int health, int attack, int defense)
+    : Object(name, "Equipment"), health(health), attack(attack), defense(defense) {
 }
 const int Equipment::getHealth() const {
     return this->health;
@@ -23,7 +24,7 @@ Consumable::Consumable() : Object() {
     this->poisonous = 0;
     this->antinode = 0;
 }
-Consumable::Consumable(string name, int health, int hunger, int thirsty, int poisonous, bool antinode) : Object(name, "Consumable") {
+Consumable::Consumable(std::string name, int health, int hunger, int thirsty, int poisonous, bool antinode) : Object(name, "Consumable") {
     this->health = health;
     this->hunger = hunger;
     this->thirsty = thirsty;

@@ -1,7 +1,28 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+
+#include "../Headers/GraphicManager.h"
+#include "../Headers/Item.h"
 
 int main() {
-    cout << "this is the start of the adventure" << endl;
+    // game menu
+    initGraphic();
+Menu:
+    int option = displayMenu();
+    switch (option) {
+        // start
+        case 0:
+            // difficulty
+            inputPlayerName();
+            break;
+        case 1:
+            chooseDifficulty();
+            goto Menu;
+        // exit
+        case 2:
+            endGraphic();
+            break;
+        default:
+            break;
+    }
     return 0;
 }
