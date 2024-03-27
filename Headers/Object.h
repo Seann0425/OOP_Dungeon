@@ -6,7 +6,7 @@
 class Object {
 public:
     Object();
-    Object(std::string, std::string);
+    Object(const std::string, std::string);
     const std::string getName() const;
     const std::string getTag() const;
 protected:
