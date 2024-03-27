@@ -13,6 +13,7 @@ void initGraphic() {
     while ((input = getch()) != static_cast<int>('r')) {
         printw("Do not spam other keys\n");
     }
+    curs_set(0);
     clear();
     refresh();
 }
@@ -83,13 +84,13 @@ const std::string readString(WINDOW* curWindow) {
     std::string input = "";
     nocbreak();
     int ch;
-    keypad(curWindow, false);
+    keypad(curWindow, true);
     while ((ch = wgetch(curWindow)) != '\n') {
         if (ch >= 32 && ch <= 126) {
             input.push_back(ch);
             mvwaddch(curWindow, y_cur, x_cur, ch);
             x_cur++;
-        } else if (ch == 8 && x_cur > x_origin) {
+        } else if ((ch == 8 || ch == 127 || ch == KEY_BACKSPACE) && x_cur > x_origin) {
             input.pop_back();
             x_cur--;
             mvwaddch(curWindow, y_cur, x_cur, 32);  // 32 = space

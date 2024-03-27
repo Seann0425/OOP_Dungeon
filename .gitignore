@@ -39,3 +39,6 @@
 
 # block some Windows trash
 [Dd]esktop.ini
+
+# editor settings
+.vscode
