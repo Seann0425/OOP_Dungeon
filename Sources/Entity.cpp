@@ -10,3 +10,9 @@ Player::Player() : GameCharacter() {
 }
 Player::Player(const std::string name, int mxHP, int curHP, int atk, int def) : GameCharacter(name, "Player", mxHP, curHP, atk, def) {
 }
+void Player::EQUIPMENT_LIMIT(size_t limit) {
+    equipment_init = limit;
+}
+void Player::CONSUMABLE_LIMIT(size_t limit) {
+    consumable_init = limit;
+}

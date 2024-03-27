@@ -8,6 +8,12 @@
 
 using JSON = nlohmann::json;
 
+// initialize game settings
+size_t Player::equipment_init = -1;
+size_t Player::consumable_init = -1;
+const size_t &Player::EQUIPMENT_MAX = Player::equipment_init;
+const size_t &Player::CONSUMABLE_MAX = Player::consumable_init;
+
 int main() {
     // read Settings.json file
     JSON Settings;
@@ -15,8 +21,9 @@ int main() {
     jfile >> Settings;
     jfile.close();
 
-    // initialize some game settings
-    const size_t Player::EQUIPMENT_MAX = Settings.at("PLAYER_EQUIPMENT_MAX");
+    // initialize game settings
+    Player::EQUIPMENT_LIMIT(Settings.at("PLAYER_EQUIPMENT_MAX"));
+    Player::CONSUMABLE_LIMIT(Settings.at("PLAYER_CONSUMABLE_MAX"));
 
     // initialize ncurses and open game menu
     initGraphic();
