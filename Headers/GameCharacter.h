@@ -7,7 +7,7 @@
 class GameCharacter : public Object {
 public:
     GameCharacter();
-    GameCharacter(const std::string, const std::string, int, int, int, int);
+    GameCharacter(std::string&, const std::string, int, int, int, int);
     const bool checkDead() const;
     void takeDamage(int);
     void gotHealed(int);

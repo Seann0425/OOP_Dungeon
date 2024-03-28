@@ -1,10 +1,16 @@
 #include "../Headers/Item.h"
 
-// definition of equipment
-Equipment::Equipment() : Object(), health(0), attack(0), defense(0) {
+// definition of Item
+Item::Item() {
 }
-Equipment::Equipment(std::string name, int health, int attack, int defense)
-    : Object(name, "Equipment"), health(health), attack(attack), defense(defense) {
+Item::Item(std::string& name, const std::string tag, int price) : Object(name, tag) {
+    this->price = price;
+}
+// definition of equipment
+Equipment::Equipment() : Item(), health(0), attack(0), defense(0) {
+}
+Equipment::Equipment(std::string& name, int price, int health, int attack, int defense)
+    : Item(name, "Equipment", price), health(health), attack(attack), defense(defense) {
 }
 const int Equipment::getHealth() const {
     return this->health;
@@ -17,14 +23,15 @@ const int Equipment::getDefense() const {
 }
 
 // definition of consumable
-Consumable::Consumable() : Object() {
+Consumable::Consumable() : Item() {
     this->health = 0;
     this->hunger = 0;
     this->thirsty = 0;
     this->poisonous = 0;
     this->antinode = 0;
 }
-Consumable::Consumable(std::string name, int health, int hunger, int thirsty, int poisonous, bool antinode) : Object(name, "Consumable") {
+Consumable::Consumable(std::string& name, int price, int health, int hunger, int thirsty, int poisonous, bool antinode)
+    : Item(name, "Consumable", price) {
     this->health = health;
     this->hunger = hunger;
     this->thirsty = thirsty;

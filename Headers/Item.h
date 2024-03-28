@@ -1,14 +1,22 @@
-#ifndef Item
-#define Item
+#ifndef ITEM
+#define ITEM
 
 #include <iostream>
 
 #include "Object.h"
 
-class Equipment : public Object {
+class Item : public Object {
+public:
+    Item();
+    Item(std::string&, const std::string, int);
+private:
+    int price;
+};
+
+class Equipment : public Item {
 public:
     Equipment();
-    Equipment(std::string, int, int, int);
+    Equipment(std::string&, int, int, int, int);
     const int getHealth() const;
     const int getAttack() const;
     const int getDefense() const;
@@ -18,10 +26,10 @@ private:
     int defense;
 };
 
-class Consumable : public Object {
+class Consumable : public Item {
 public:
     Consumable();
-    Consumable(std::string, int, int, int, int, bool);
+    Consumable(std::string&, int, int, int, int, int, bool);
     const int getHealth() const;
     const int getHunger() const;
     const int getThirsty() const;
