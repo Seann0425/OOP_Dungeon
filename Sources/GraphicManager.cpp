@@ -9,6 +9,7 @@ void initGraphic() {
     raw();
     noecho();
     printw("Press the key R when you are ready to play the game with current window size.\n");
+    printw("And please do not change the size of the window during gameplay.\n");
     int input;
     while ((input = getch()) != static_cast<int>('r')) {
         printw("Do not spam other keys\n");

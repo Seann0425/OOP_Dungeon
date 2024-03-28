@@ -14,6 +14,29 @@ size_t Player::consumable_init = -1;
 const size_t &Player::EQUIPMENT_MAX = Player::equipment_init;
 const size_t &Player::CONSUMABLE_MAX = Player::consumable_init;
 
+// game menu function, return true if exit
+bool runMenu() {
+    int option = -1;
+    while (option != 1) {
+        option = displayMenu();
+        switch (option) {
+            // start
+            case 0:
+                inputPlayerName();
+                break;
+            case 1:
+                chooseDifficulty();
+                break;
+            case 2:
+                endGraphic();
+                return true;
+            default:
+                break;
+        }
+    }
+    return false;
+}
+
 int main() {
     // read Settings.json file
     JSON Settings;
@@ -27,23 +50,13 @@ int main() {
 
     // initialize ncurses and open game menu
     initGraphic();
-Menu:
-    int option = displayMenu();
-    switch (option) {
-        // start
-        case 0:
-            // difficulty
-            inputPlayerName();
-            break;
-        case 1:
-            chooseDifficulty();
-            goto Menu;
-        // exit
-        case 2:
-            endGraphic();
-            break;
-        default:
-            break;
-    }
+
+    // display menu
+    if (runMenu() == true) return 0;
+
+    // TODO: intepret story
+
+    // TODO: init ExploringScreen
+
     return 0;
 }

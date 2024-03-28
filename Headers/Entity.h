@@ -12,7 +12,7 @@
 class Monster : public GameCharacter {
 public:
     Monster();
-    Monster(const std::string, int, int, int, int);
+    Monster(const std::string &, int, int, int, int);
 private:
 };
 
@@ -34,7 +34,7 @@ public:
     static const size_t &EQUIPMENT_MAX;
     static const size_t &CONSUMABLE_MAX;
     Player();
-    Player(const std::string, int, int, int, int);
+    Player(std::string &, int, int, int, int);
     static void EQUIPMENT_LIMIT(size_t);
     static void CONSUMABLE_LIMIT(size_t);
     void addEquipment(Equipment *);    // not implemented
