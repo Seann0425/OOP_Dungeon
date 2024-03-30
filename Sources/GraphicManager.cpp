@@ -3,6 +3,31 @@
 #include <array>
 #include <iostream>
 
+// Scene Initialize
+Scene::Scene() {
+    int Y, X;
+    getmaxyx(stdscr, Y, X);
+    buttons = newwin(Y / 2, Y / 2, Y / 2, 0);
+    dialogues = newwin(Y / 2, X - Y * 3 / 2, Y / 2, Y / 2);
+    mini_map = newwin(Y / 2, Y, Y / 2, X - Y);
+    refresh();
+    box(buttons, 0, 0);
+    box(dialogues, 0, 0);
+    box(mini_map, 0, 0);
+    wrefresh(buttons);
+    wrefresh(dialogues);
+    wrefresh(mini_map);
+}
+
+ExploringScene::ExploringScene() : Scene() {
+    int y_max, x_max;
+    getmaxyx(stdscr, y_max, x_max);
+    gamePlay = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
+    refresh();
+    box(gamePlay, 0, 0);
+    wrefresh(gamePlay);
+}
+
 // experimental function
 void initGraphic() {
     initscr();
@@ -18,6 +43,7 @@ void initGraphic() {
     clear();
     refresh();
 }
+
 const int displayMenu() {
     int x_max, y_max;
     getmaxyx(stdscr, y_max, x_max);
@@ -117,7 +143,7 @@ const std::string inputPlayerName() {
     wclear(field);
     std::string msg = "Your name is " + name + "\n";
     mvwprintw(field, 0, 0, msg.c_str());
-    mvwprintw(field, 1, 0, "Press any key to leave");
+    mvwprintw(field, 1, 0, "Press any key to continue\n");
     wgetch(field);
     wclear(field);
     wrefresh(field);

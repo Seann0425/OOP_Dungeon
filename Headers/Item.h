@@ -9,7 +9,7 @@ class Item : public Object {
 public:
     Item();
     Item(std::string&, const std::string, int);
-private:
+protected:
     int price;
 };
 

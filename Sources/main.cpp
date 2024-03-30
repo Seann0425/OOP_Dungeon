@@ -16,8 +16,8 @@ const size_t &Player::CONSUMABLE_MAX = Player::consumable_init;
 
 // game menu function, return true if exit
 bool runMenu() {
-    int option = -1;
-    while (option != 1) {
+    int option = 1;
+    while (option == 1) {
         option = displayMenu();
         switch (option) {
             // start
@@ -56,7 +56,9 @@ int main() {
 
     // TODO: intepret story
 
-    // TODO: init ExploringScreen
+    // TODO: init ExploringScene
+    ExploringScene exploring;
 
+    getch();
     return 0;
 }
