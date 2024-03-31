@@ -2,6 +2,7 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
 
+#include "../Headers/Dungeon.h"
 #include "../Headers/Entity.h"
 #include "../Headers/GraphicManager.h"
 #include "../Headers/Item.h"
@@ -9,20 +10,23 @@
 using JSON = nlohmann::json;
 
 // initialize game settings
-size_t Player::equipment_init = -1;
-size_t Player::consumable_init = -1;
-const size_t &Player::EQUIPMENT_MAX = Player::equipment_init;
-const size_t &Player::CONSUMABLE_MAX = Player::consumable_init;
+int Player::health_initializer = std::numeric_limits<int>::min();
+int Player::attack_initializer = std::numeric_limits<int>::min();
+int Player::defense_initializer = std::numeric_limits<int>::min();
+const int &Player::INIT_HEALTH = Player::health_initializer;
+const int &Player::INIT_ATTACK = Player::attack_initializer;
+const int &Player::INIT_DEFENSE = Player::defense_initializer;
 
 // game menu function, return true if exit
-bool runMenu() {
+bool runMenu(Dungeon *dungeon) {
     int option = 1;
+    std::string name;
     while (option == 1) {
         option = displayMenu();
         switch (option) {
             // start
             case 0:
-                inputPlayerName();
+                name = inputPlayerName();
                 break;
             case 1:
                 chooseDifficulty();
@@ -34,6 +38,7 @@ bool runMenu() {
                 break;
         }
     }
+    dungeon->createPlayer(name);
     return false;
 }
 
@@ -45,19 +50,24 @@ int main() {
     jfile.close();
 
     // initialize game settings
-    Player::EQUIPMENT_LIMIT(Settings.at("PLAYER_EQUIPMENT_MAX"));
-    Player::CONSUMABLE_LIMIT(Settings.at("PLAYER_CONSUMABLE_MAX"));
+    Player::health_init(Settings.at("PLAYER_INIT_HEALTH"));
+    Player::attack_init(Settings.at("PLAYER_INIT_ATTACK"));
+    Player::defense_init(Settings.at("PLAYER_INIT_DEFENSE"));
 
     // initialize ncurses and open game menu
     initGraphic();
+    Dungeon *dungeon = new Dungeon;
+    dungeon->initGame();
 
     // display menu
-    if (runMenu() == true) return 0;
+    // runMenu() has called createPlayer()
+    if (runMenu(dungeon) == true) return 0;
 
     // TODO: intepret story
 
     // TODO: init ExploringScene
     ExploringScene exploring;
+    exploring.drawMiniMap(dungeon);
 
     getch();
     return 0;

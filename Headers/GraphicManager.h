@@ -4,10 +4,13 @@
 
 #include <string>
 
+#include "Dungeon.h"
+
 // base class for different scene
 class Scene {
 public:
     Scene();
+    void drawMiniMap(Dungeon*);
 protected:
     // info for player
     WINDOW* buttons;

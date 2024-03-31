@@ -19,6 +19,21 @@ Scene::Scene() {
     wrefresh(mini_map);
 }
 
+// TODO: update mini_map status, which includes current player room and regular rooms
+void Scene::drawMiniMap(Dungeon* dungeon) {
+    int y, x;
+    getmaxyx(mini_map, y, x);
+    wmove(mini_map, y / 3, 1);
+    whline(mini_map, ACS_HLINE, x - 2);
+    wmove(mini_map, y * 2 / 3, 1);
+    whline(mini_map, ACS_HLINE, x - 2);
+    wmove(mini_map, 1, x / 3);
+    wvline(mini_map, ACS_VLINE, y - 2);
+    wmove(mini_map, 1, x * 2 / 3);
+    wvline(mini_map, ACS_VLINE, y - 2);
+    wrefresh(mini_map);
+}
+
 ExploringScene::ExploringScene() : Scene() {
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);

@@ -8,11 +8,17 @@ Monster::Monster(const std::string& name, int mxHp, int curHp, int atk, int def)
 Player::Player() : GameCharacter() {
     this->tag = "Player";
 }
-Player::Player(std::string& name, int mxHP, int curHP, int atk, int def) : GameCharacter(name, "Player", mxHP, curHP, atk, def) {
+Player::Player(const std::string& name, int mxHP, int curHP, int atk, int def) : GameCharacter(name, "Player", mxHP, curHP, atk, def) {
 }
-void Player::EQUIPMENT_LIMIT(size_t limit) {
-    equipment_init = limit;
+void Player::health_init(int hp) {
+    health_initializer = hp;
 }
-void Player::CONSUMABLE_LIMIT(size_t limit) {
-    consumable_init = limit;
+void Player::attack_init(int atk) {
+    attack_initializer = atk;
+}
+void Player::defense_init(int def) {
+    defense_initializer = def;
+}
+void Player::setRoom(Room* cur) {
+    this->currentRoom = cur;
 }

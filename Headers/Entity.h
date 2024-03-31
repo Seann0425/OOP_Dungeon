@@ -31,18 +31,24 @@ private:
 
 class Player : public GameCharacter {
 public:
-    static const size_t &EQUIPMENT_MAX;
-    static const size_t &CONSUMABLE_MAX;
+    static const int &INIT_HEALTH;
+    static const int &INIT_ATTACK;
+    static const int &INIT_DEFENSE;
+    const size_t EQUIPMENT_MAX = 10;
+    const size_t CONSUMABLE_MAX = 3;
     Player();
-    Player(std::string &, int, int, int, int);
-    static void EQUIPMENT_LIMIT(size_t);
-    static void CONSUMABLE_LIMIT(size_t);
+    Player(const std::string &, int, int, int, int);
+    static void health_init(int);
+    static void attack_init(int);
+    static void defense_init(int);
     void addEquipment(Equipment *);    // not implemented
     void addConsumable(Consumable *);  // not implemented
     void changeStatus(int);            // equipment for atk or def, not implemented
+    void setRoom(Room *);
 private:
-    static size_t equipment_init;
-    static size_t consumable_init;
+    static int health_initializer;
+    static int attack_initializer;
+    static int defense_initializer;
     std::vector<Equipment *> inventory;
     std::vector<Consumable *> sack;
     Room *currentRoom;
