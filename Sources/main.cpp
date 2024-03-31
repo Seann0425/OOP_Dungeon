@@ -9,8 +9,8 @@
 using JSON = nlohmann::json;
 
 // initialize game settings
-size_t Player::equipment_init = -1;
-size_t Player::consumable_init = -1;
+size_t Player::equipment_init = std::numeric_limits<size_t>::max();
+size_t Player::consumable_init = std::numeric_limits<size_t>::max();
 const size_t &Player::EQUIPMENT_MAX = Player::equipment_init;
 const size_t &Player::CONSUMABLE_MAX = Player::consumable_init;
 
