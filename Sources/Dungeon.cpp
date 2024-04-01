@@ -25,8 +25,13 @@ void Dungeon::initGame() {
 void Dungeon::createPlayer(const std::string &name) {
     this->player = new Player(name, Player::INIT_HEALTH, Player::INIT_HEALTH, Player::INIT_ATTACK, Player::INIT_DEFENSE);
     player->setRoom(init_room);
+    player->setCoordinate(7, 15);
 }
 
 const std::pair<int, int> Dungeon::getCurrentIndex() const {
     return std::make_pair(current_room_idx.first, current_room_idx.second);
+}
+
+Player *Dungeon::getPlayer() const {
+    return player;
 }

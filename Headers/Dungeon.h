@@ -20,6 +20,7 @@ public:
     void createPlayer(const std::string&);
     void createMap();
     void runDungeon();
+    Player* getPlayer() const;
     const std::pair<int, int> getCurrentIndex() const;
 private:
     Player* player;

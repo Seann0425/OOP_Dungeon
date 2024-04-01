@@ -46,10 +46,21 @@ void Scene::drawMiniMap(Dungeon* dungeon) {
 ExploringScene::ExploringScene() : Scene() {
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
-    gamePlay = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
+    room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
     refresh();
-    box(gamePlay, 0, 0);
-    wrefresh(gamePlay);
+    box(room, 0, 0);
+    wrefresh(room);
+}
+
+// y: 1~13, x:1~28
+void ExploringScene::drawRoom(const Player* player) {
+    mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
+    wrefresh(this->room);
+    // TODO: display object
+}
+
+WINDOW* ExploringScene::getRoom() {
+    return room;
 }
 
 // experimental function

@@ -22,3 +22,31 @@ void Player::defense_init(int def) {
 void Player::setRoom(Room* cur) {
     this->currentRoom = cur;
 }
+void Player::setCoordinate(int y, int x) {
+    this->coordinate = std::make_pair(y, x);
+}
+// void Player::changeCoordinate(int _y, int _x) {
+//     this->coordinate.first += _y;
+//     this->coordinate.second += _x;
+// }
+const int Player::getCoordinateY() const {
+    return this->coordinate.first;
+}
+const int Player::getCoordinateX() const {
+    return this->coordinate.second;
+}
+const Room* Player::getRoom() const {
+    return this->currentRoom;
+}
+void Player::playerMove(int direction, WINDOW* room) {
+    mvwaddch(room, this->coordinate.first, this->coordinate.second, ' ');
+    if (direction == 0403) {
+        this->coordinate.first--;
+    } else if (direction == 0402) {
+        this->coordinate.first++;
+    } else if (direction == 0404) {
+        this->coordinate.second--;
+    } else if (direction == 0405) {
+        this->coordinate.second++;
+    }
+}

@@ -43,18 +43,15 @@ bool runMenu(Dungeon *dungeon) {
 }
 
 int main() {
-    // read Settings.json file
     JSON Settings;
     std::ifstream jfile("../assets/Settings.json");
     jfile >> Settings;
     jfile.close();
 
-    // initialize game settings
     Player::health_init(Settings.at("PLAYER_INIT_HEALTH"));
     Player::attack_init(Settings.at("PLAYER_INIT_ATTACK"));
     Player::defense_init(Settings.at("PLAYER_INIT_DEFENSE"));
 
-    // initialize ncurses and open game menu
     initGraphic();
     Dungeon *dungeon = new Dungeon;
     dungeon->initGame();
@@ -62,13 +59,37 @@ int main() {
     // display menu
     // runMenu() has called createPlayer()
     if (runMenu(dungeon) == true) return 0;
+    Player *player = dungeon->getPlayer();
 
     // TODO: intepret story
 
-    // TODO: init ExploringScene
     ExploringScene exploring;
     exploring.drawMiniMap(dungeon);
-
-    getch();
+    exploring.drawRoom(player);
+    /* game loop
+    assume scene can be overlapped after clear()
+    while(exploring) {
+        if (fighting) {}
+        else if (trading) {}
+    }
+    */
+    std::array<bool, 3> gameStatus{true, false, false};  // explore, fight, trade
+    int input;
+    keypad(stdscr, true);
+    while (gameStatus[0]) {
+        switch ((input = getch())) {
+            case KEY_UP:
+            case KEY_DOWN:
+            case KEY_LEFT:
+            case KEY_RIGHT:
+                player->playerMove(input, exploring.getRoom());
+                break;
+            case 27:
+            default:
+                break;
+        }
+        exploring.drawMiniMap(dungeon);
+        exploring.drawRoom(player);
+    }
     return 0;
 }

@@ -30,8 +30,10 @@ protected:
 class ExploringScene : public Scene {
 public:
     ExploringScene();
+    void drawRoom(const Player*);
+    WINDOW* getRoom();
 private:
-    WINDOW* gamePlay;
+    WINDOW* room;
 };
 
 // player fighting

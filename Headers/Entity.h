@@ -1,6 +1,8 @@
 #ifndef ENTITY
 #define ENTITY
 
+#include <ncurses/ncurses.h>
+
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -45,6 +47,11 @@ public:
     void addConsumable(Consumable *);  // not implemented
     void changeStatus(int);            // equipment for atk or def, not implemented
     void setRoom(Room *);
+    void setCoordinate(int, int);
+    const int getCoordinateY() const;
+    const int getCoordinateX() const;
+    const Room *getRoom() const;
+    void playerMove(int, WINDOW *);
 private:
     static int health_initializer;
     static int attack_initializer;
@@ -52,6 +59,7 @@ private:
     std::vector<Equipment *> inventory;
     std::vector<Consumable *> sack;
     Room *currentRoom;
-    std::pair<int, int> poisoned;  // time / dps
+    std::pair<int, int> poisoned;    // time / dps
+    std::pair<int, int> coordinate;  // y, x
 };
 #endif
