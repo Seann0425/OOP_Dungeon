@@ -6,6 +6,14 @@
 
 #include "Dungeon.h"
 
+#define COLOR_TAKO 8
+
+#define TAKO_BACKGROUND 1
+#define REVERSE_PAIR 2
+#define TAKO_PAIR 3
+#define RED_PAIR 4
+#define RED_BACKGROUND 5
+
 // base class for different scene
 class Scene {
 public:

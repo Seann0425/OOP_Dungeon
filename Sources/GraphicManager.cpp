@@ -22,6 +22,8 @@ Scene::Scene() {
 // TODO: update mini_map status, which includes current player room and regular rooms
 void Scene::drawMiniMap(Dungeon* dungeon) {
     int y, x;
+    int Y, X;
+    getmaxyx(stdscr, Y, X);
     getmaxyx(mini_map, y, x);
     wmove(mini_map, y / 3, 1);
     whline(mini_map, ACS_HLINE, x - 2);
@@ -31,7 +33,14 @@ void Scene::drawMiniMap(Dungeon* dungeon) {
     wvline(mini_map, ACS_VLINE, y - 2);
     wmove(mini_map, 1, x * 2 / 3);
     wvline(mini_map, ACS_VLINE, y - 2);
+    WINDOW* cur_area = subwin(mini_map, y / 3 - 2, x / 3 - 1, Y / 2 + y / 3 * dungeon->getCurrentIndex().first + 1,
+                              X - Y + (x / 3) * dungeon->getCurrentIndex().second + 1);
     wrefresh(mini_map);
+    touchwin(mini_map);
+    wclear(cur_area);
+    wbkgd(cur_area, COLOR_PAIR(REVERSE_PAIR));
+    wrefresh(cur_area);
+    delwin(cur_area);
 }
 
 ExploringScene::ExploringScene() : Scene() {
@@ -46,6 +55,7 @@ ExploringScene::ExploringScene() : Scene() {
 // experimental function
 void initGraphic() {
     initscr();
+    start_color();
     raw();
     noecho();
     printw("Press the key R when you are ready to play the game with current window size.\n");
@@ -57,6 +67,14 @@ void initGraphic() {
     curs_set(0);
     clear();
     refresh();
+
+    // initialize the color that will be used later
+    init_color(COLOR_TAKO, 484, 422, 551);
+    init_pair(TAKO_BACKGROUND, COLOR_BLACK, COLOR_TAKO);
+    init_pair(REVERSE_PAIR, COLOR_BLACK, COLOR_WHITE);
+    init_pair(TAKO_PAIR, COLOR_TAKO, COLOR_BLACK);
+    init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK);        // test
+    init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED);  // test
 }
 
 const int displayMenu() {

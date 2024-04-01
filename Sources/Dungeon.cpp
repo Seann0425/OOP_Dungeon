@@ -8,6 +8,7 @@ Dungeon::Dungeon() {
     boss_room = rooms[0][2];
     key_room = rooms[1][1];
     init_room = rooms[2][0];
+    current_room_idx = std::make_pair(2, 0);
 }
 
 void Dungeon::initGame() {
@@ -24,4 +25,8 @@ void Dungeon::initGame() {
 void Dungeon::createPlayer(const std::string &name) {
     this->player = new Player(name, Player::INIT_HEALTH, Player::INIT_HEALTH, Player::INIT_ATTACK, Player::INIT_DEFENSE);
     player->setRoom(init_room);
+}
+
+const std::pair<int, int> Dungeon::getCurrentIndex() const {
+    return std::make_pair(current_room_idx.first, current_room_idx.second);
 }

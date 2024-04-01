@@ -3,6 +3,7 @@
 
 #include <ctime>
 #include <random>
+#include <utility>
 #include <vector>
 
 #include "Entity.h"
@@ -19,12 +20,14 @@ public:
     void createPlayer(const std::string&);
     void createMap();
     void runDungeon();
+    const std::pair<int, int> getCurrentIndex() const;
 private:
     Player* player;
     std::vector<std::vector<Room*>> rooms;  // 3 * 3
     Room* boss_room;
     Room* key_room;
     Room* init_room;
+    std::pair<int, int> current_room_idx;
 };
 
 #endif
