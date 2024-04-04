@@ -19,6 +19,7 @@ class Scene {
 public:
     Scene();
     void drawMiniMap(Dungeon*);
+    virtual int inOptions() = 0;
 protected:
     // info for player
     WINDOW* buttons;

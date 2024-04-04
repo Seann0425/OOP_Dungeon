@@ -84,7 +84,7 @@ int main() {
             case KEY_RIGHT:
                 player->playerMove(input, exploring.getRoom());
                 break;
-            case 27:
+            case 27:  // ESC
             default:
                 break;
         }

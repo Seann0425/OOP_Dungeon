@@ -42,11 +42,15 @@ void Player::playerMove(int direction, WINDOW* room) {
     mvwaddch(room, this->coordinate.first, this->coordinate.second, ' ');
     if (direction == 0403) {
         this->coordinate.first--;
+        if (coordinate.first < 1) coordinate.first = 1;
     } else if (direction == 0402) {
         this->coordinate.first++;
+        if (coordinate.first > Room::room_height - 2) coordinate.first = Room::room_height - 2;
     } else if (direction == 0404) {
         this->coordinate.second--;
+        if (coordinate.second < 1) coordinate.second = 1;
     } else if (direction == 0405) {
         this->coordinate.second++;
+        if (coordinate.second > Room::room_width - 2) coordinate.second = Room::room_width - 2;
     }
 }
