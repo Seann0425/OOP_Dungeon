@@ -44,6 +44,7 @@ void Scene::drawMiniMap(Dungeon* dungeon) {
 }
 
 ExploringScene::ExploringScene() : Scene() {
+    optionButtons = {"Exit", "Status"};
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
     room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
@@ -61,6 +62,42 @@ void ExploringScene::drawRoom(const Player* player) {
 
 WINDOW* ExploringScene::getRoom() {
     return room;
+}
+
+void ExploringScene::drawOptions() {
+    for (size_t i = 0; i < optionButtons.size(); i++) {
+        mvwprintw(buttons, 1 + 2 * static_cast<int>(optionButtons.size() - 1 - i), 1, optionButtons[i].c_str());
+    }
+    wrefresh(buttons);
+}
+
+int ExploringScene::inOptions() {
+    keypad(buttons, true);
+    int keyPressed;
+    size_t curButton = 0;
+    while (true) {
+        for (size_t i = 0; i < optionButtons.size(); i++) {
+            if (i == curButton) wattron(buttons, A_REVERSE);
+            mvwprintw(buttons, 1 + 2 * static_cast<int>(optionButtons.size() - 1 - i), 1, optionButtons[i].c_str());
+            wattroff(buttons, A_REVERSE);
+        }
+        keyPressed = wgetch(buttons);
+        switch (keyPressed) {
+            case KEY_UP:
+                if (curButton == optionButtons.size() - 1) break;
+                curButton++;
+                break;
+            case KEY_DOWN:
+                if (curButton == 0) break;
+                curButton--;
+                break;
+            default:
+                break;
+        }
+        if (keyPressed == 10) break;  // Enter
+    }
+    wrefresh(buttons);
+    return static_cast<int>(curButton);
 }
 
 // experimental function

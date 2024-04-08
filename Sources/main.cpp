@@ -66,6 +66,7 @@ int main() {
     ExploringScene exploring;
     exploring.drawMiniMap(dungeon);
     exploring.drawRoom(player);
+    exploring.drawOptions();
     /* game loop
     assume scene can be overlapped after clear()
     while(exploring) {
@@ -74,7 +75,7 @@ int main() {
     }
     */
     std::array<bool, 3> gameStatus{true, false, false};  // explore, fight, trade
-    int input;
+    int input, option;
     keypad(stdscr, true);
     while (gameStatus[0]) {
         switch ((input = getch())) {
@@ -85,11 +86,18 @@ int main() {
                 player->playerMove(input, exploring.getRoom());
                 break;
             case 27:  // ESC
+                option = exploring.inOptions();
+                if (option == 0) return 0;
+                else if (option == 1) {
+                    // TODO: show status in dialogue
+                    break;
+                }
             default:
                 break;
         }
         exploring.drawMiniMap(dungeon);
         exploring.drawRoom(player);
+        exploring.drawOptions();
     }
     return 0;
 }

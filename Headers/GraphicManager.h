@@ -33,8 +33,11 @@ public:
     ExploringScene();
     void drawRoom(const Player*);
     WINDOW* getRoom();
+    int inOptions();
+    void drawOptions();
 private:
     WINDOW* room;
+    std::array<std::string, 2> optionButtons;
 };
 
 // player fighting
