@@ -10,6 +10,7 @@ Dungeon::Dungeon() {
     init_room = rooms[2][0];
     current_room_idx = std::make_pair(2, 0);
     // set exit
+    // BUG CANDIDATE
     for (size_t y = 0; y < 3; y++) {
         for (size_t x = 0; x < 3; x++) {
             rooms[y][x]->setExit(y, x);

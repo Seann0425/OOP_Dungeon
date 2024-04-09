@@ -95,6 +95,7 @@ void ExploringScene::drawRoom(const Player* player) {
     box(this->room, 0, 0);
     mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
     std::array<bool, 4> hasExit = player->getRoom()->getExit();
+    // BUG CANDIDATE
     if (hasExit[0]) mvwaddch(this->room, 0, Room::exit_X, ' ');
     if (hasExit[1]) mvwaddch(this->room, Room::room_height - 1, Room::exit_X, ' ');
     if (hasExit[2]) mvwaddch(this->room, Room::exit_Y, 0, ' ');
