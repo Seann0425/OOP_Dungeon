@@ -1,8 +1,7 @@
 #include "../Headers/Item.h"
 
 // definition of Item
-Item::Item() {
-}
+Item::Item() = default;
 Item::Item(std::string& name, const std::string tag, int price) : Object(name, tag) {
     this->price = price;
 }

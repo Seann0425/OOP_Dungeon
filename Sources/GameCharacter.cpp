@@ -1,7 +1,6 @@
 #include "../Headers/GameCharacter.h"
 
-GameCharacter::GameCharacter() {
-}
+GameCharacter::GameCharacter() = default;
 GameCharacter::GameCharacter(const std::string& n, const std::string tag, int mxHP, int curHP, int atk, int def) : Object(n, tag) {
     this->maxHealth = mxHP;
     this->currentHealth = curHP;
