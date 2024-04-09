@@ -19,12 +19,14 @@ class Scene {
 public:
     Scene();
     void drawMiniMap(Dungeon*);
-    virtual int inOptions() = 0;
+    int inOptions();
+    void drawOptions();
 protected:
     // info for player
     WINDOW* buttons;
     WINDOW* dialogues;
     WINDOW* mini_map;
+    std::vector<std::string> optionButtons;
 };
 
 // player walking in rooms
@@ -33,11 +35,8 @@ public:
     ExploringScene();
     void drawRoom(const Player*);
     WINDOW* getRoom();
-    int inOptions();
-    void drawOptions();
 private:
     WINDOW* room;
-    std::array<std::string, 2> optionButtons;
 };
 
 // player fighting

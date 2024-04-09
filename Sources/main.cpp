@@ -91,7 +91,7 @@ int main() {
                 else if (option == 1) {
                     // TODO: show status in dialogue
                     break;
-                }
+                } else break;
             default:
                 break;
         }

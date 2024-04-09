@@ -43,38 +43,17 @@ void Scene::drawMiniMap(Dungeon* dungeon) {
     delwin(cur_area);
 }
 
-ExploringScene::ExploringScene() : Scene() {
-    optionButtons = {"Exit", "Status"};
-    int y_max, x_max;
-    getmaxyx(stdscr, y_max, x_max);
-    room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
-    refresh();
-    box(room, 0, 0);
-    wrefresh(room);
-}
-
-// y: 1~13, x:1~28
-void ExploringScene::drawRoom(const Player* player) {
-    mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
-    wrefresh(this->room);
-    // TODO: display object
-}
-
-WINDOW* ExploringScene::getRoom() {
-    return room;
-}
-
-void ExploringScene::drawOptions() {
+void Scene::drawOptions() {
     for (size_t i = 0; i < optionButtons.size(); i++) {
         mvwprintw(buttons, 1 + 2 * static_cast<int>(optionButtons.size() - 1 - i), 1, optionButtons[i].c_str());
     }
     wrefresh(buttons);
 }
 
-int ExploringScene::inOptions() {
+int Scene::inOptions() {
     keypad(buttons, true);
     int keyPressed;
-    size_t curButton = 0;
+    size_t curButton = optionButtons.size() - 1;
     while (true) {
         for (size_t i = 0; i < optionButtons.size(); i++) {
             if (i == curButton) wattron(buttons, A_REVERSE);
@@ -94,10 +73,38 @@ int ExploringScene::inOptions() {
             default:
                 break;
         }
+        if (keyPressed == 27) return -1;
         if (keyPressed == 10) break;  // Enter
     }
     wrefresh(buttons);
     return static_cast<int>(curButton);
+}
+
+ExploringScene::ExploringScene() : Scene() {
+    optionButtons = {"Exit", "Status"};
+    int y_max, x_max;
+    getmaxyx(stdscr, y_max, x_max);
+    room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
+    refresh();
+    box(room, 0, 0);
+    wrefresh(room);
+}
+
+// y: 1~13, x:1~28
+void ExploringScene::drawRoom(const Player* player) {
+    box(this->room, 0, 0);
+    mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
+    std::array<bool, 4> hasExit = player->getRoom()->getExit();
+    if (hasExit[0]) mvwaddch(this->room, 0, Room::exit_X, ' ');
+    if (hasExit[1]) mvwaddch(this->room, Room::room_height - 1, Room::exit_X, ' ');
+    if (hasExit[2]) mvwaddch(this->room, Room::exit_Y, 0, ' ');
+    if (hasExit[3]) mvwaddch(this->room, Room::exit_Y, Room::room_width - 1, ' ');
+    wrefresh(this->room);
+    // TODO: display object
+}
+
+WINDOW* ExploringScene::getRoom() {
+    return room;
 }
 
 // experimental function

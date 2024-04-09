@@ -39,7 +39,9 @@ const Room* Player::getRoom() const {
     return this->currentRoom;
 }
 void Player::playerMove(int direction, WINDOW* room) {
+    // clear original position
     mvwaddch(room, this->coordinate.first, this->coordinate.second, ' ');
+    // change player's position
     if (direction == 0403) {
         this->coordinate.first--;
         if (coordinate.first < 1) coordinate.first = 1;
