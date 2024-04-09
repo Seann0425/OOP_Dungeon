@@ -6,7 +6,7 @@ Dungeon::Dungeon() {
     // set init room, boss room and key room(?
     // TODO: make it random
     boss_room = rooms[0][2];
-    key_room = rooms[1][1];
+    key_room = rooms[0][0];
     init_room = rooms[2][0];
     current_room_idx = std::make_pair(2, 0);
     // set exit
