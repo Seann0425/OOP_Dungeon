@@ -1,7 +1,6 @@
 #include "../Headers/Room.h"
 
-Room::Room() {
-}
+Room::Room() = default;
 
 void Room::setEco(Ecosystem _e) {
     this->eco = _e;

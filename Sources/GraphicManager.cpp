@@ -193,6 +193,7 @@ const int chooseDifficulty() {
 const std::string readString(WINDOW* curWindow) {
     // read only readable character
     //  character count limit could be implemented
+    echo();
     int x_origin, y_origin, x_cur, y_cur;
     getyx(curWindow, y_origin, x_origin);
     y_cur = y_origin;
@@ -218,6 +219,7 @@ const std::string readString(WINDOW* curWindow) {
         x_cur--;
     }
     cbreak();
+    noecho();
     return input;
 }
 
