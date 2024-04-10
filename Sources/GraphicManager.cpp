@@ -184,7 +184,6 @@ const int chooseDifficulty() {
     // haven't implemented it
     printw("This feature will be updated soon\n");
     printw("Press any key to leave\n");
-    refresh();
     getch();
     clear();
     return -1;
