@@ -1,16 +1,21 @@
 #include "../Headers/Dungeon.h"
 
-Dungeon::Dungeon() {
+Dungeon::Dungeon() : rooms(3, std::vector<Room *>(3)){
     // generate rooms
-    rooms.resize(3, std::vector<Room *>(3, new Room));
+    for (size_t y = 0; y < 3; y++) { // FIXME: maybe there are a more elegant way?
+        for (size_t x = 0; x < 3; x++) {
+            rooms[y][x] = new Room();
+        }
+    }
+
     // set init room, boss room and key room(?
     // TODO: make it random
     boss_room = rooms[0][2];
     key_room = rooms[0][0];
     init_room = rooms[2][0];
     current_room_idx = std::make_pair(2, 0);
+
     // set exit
-    // BUG CANDIDATE
     for (size_t y = 0; y < 3; y++) {
         for (size_t x = 0; x < 3; x++) {
             rooms[y][x]->setExit(y, x);
