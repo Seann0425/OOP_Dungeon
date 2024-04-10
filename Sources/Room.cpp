@@ -6,7 +6,6 @@ void Room::setEco(Ecosystem _e) {
     this->eco = _e;
 }
 
-// BUG CANDIDATE
 void Room::setExit(size_t y, size_t x) {
     // up, down, left, right
     hasExit[0] = (y > 0);
