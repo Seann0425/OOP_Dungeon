@@ -2,9 +2,13 @@
 
 #include <array>
 #include <iostream>
+#include <string>
+
+using namespace std::literals::string_literals;
 
 // Scene Initialize
 Scene::Scene() {
+    std::string test = "this is a test"s;
     int Y, X;
     getmaxyx(stdscr, Y, X);
     buttons = newwin(Y / 2, Y / 2, Y / 2, 0);
@@ -20,7 +24,7 @@ Scene::Scene() {
 }
 
 // TODO: update mini_map status, which includes current player room and regular rooms
-void Scene::drawMiniMap(Dungeon* dungeon) {
+void Scene::drawMiniMap(Dungeon *dungeon) {
     int y, x;
     int Y, X;
     getmaxyx(stdscr, Y, X);
@@ -33,7 +37,7 @@ void Scene::drawMiniMap(Dungeon* dungeon) {
     wvline(mini_map, ACS_VLINE, y - 2);
     wmove(mini_map, 1, x * 2 / 3);
     wvline(mini_map, ACS_VLINE, y - 2);
-    WINDOW* cur_area = subwin(mini_map, y / 3 - 2, x / 3 - 1, Y / 2 + y / 3 * dungeon->getCurrentIndex().first + 1,
+    WINDOW *cur_area = subwin(mini_map, y / 3 - 2, x / 3 - 1, Y / 2 + y / 3 * dungeon->getCurrentIndex().first + 1,
                               X - Y + (x / 3) * dungeon->getCurrentIndex().second + 1);
     wrefresh(mini_map);
     touchwin(mini_map);
@@ -62,19 +66,19 @@ int Scene::inOptions() {
         }
         keyPressed = wgetch(buttons);
         switch (keyPressed) {
-            case KEY_UP:
-                if (curButton == optionButtons.size() - 1) break;
-                curButton++;
-                break;
-            case KEY_DOWN:
-                if (curButton == 0) break;
-                curButton--;
-                break;
-            default:
-                break;
+        case KEY_UP:
+            if (curButton == optionButtons.size() - 1) break;
+            curButton++;
+            break;
+        case KEY_DOWN:
+            if (curButton == 0) break;
+            curButton--;
+            break;
+        default:
+            break;
         }
         if (keyPressed == 27) return -1;
-        if (keyPressed == 10) break;  // Enter
+        if (keyPressed == 10) break; // Enter
     }
     wrefresh(buttons);
     return static_cast<int>(curButton);
@@ -91,11 +95,10 @@ ExploringScene::ExploringScene() : Scene() {
 }
 
 // y: 1~13, x:1~28
-void ExploringScene::drawRoom(const Player* player) {
+void ExploringScene::drawRoom(const Player *player) {
     box(this->room, 0, 0);
     mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
     std::array<bool, 4> hasExit = player->getRoom()->getExit();
-    // BUG CANDIDATE
     if (hasExit[0]) mvwaddch(this->room, 0, Room::exit_X, ' ');
     if (hasExit[1]) mvwaddch(this->room, Room::room_height - 1, Room::exit_X, ' ');
     if (hasExit[2]) mvwaddch(this->room, Room::exit_Y, 0, ' ');
@@ -104,7 +107,7 @@ void ExploringScene::drawRoom(const Player* player) {
     // TODO: display object
 }
 
-WINDOW* ExploringScene::getRoom() {
+WINDOW *ExploringScene::getRoom() {
     return room;
 }
 
@@ -129,18 +132,17 @@ void initGraphic() {
     init_pair(TAKO_BACKGROUND, COLOR_BLACK, COLOR_TAKO);
     init_pair(REVERSE_PAIR, COLOR_BLACK, COLOR_WHITE);
     init_pair(TAKO_PAIR, COLOR_TAKO, COLOR_BLACK);
-    init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK);        // test
-    init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED);  // test
+    init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK);       // test
+    init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED); // test
 }
 
 const int displayMenu() {
     int x_max, y_max;
     getmaxyx(stdscr, y_max, x_max);
-    WINDOW* menu = newwin(20, 80, y_max / 2 - 5, x_max / 2 - 35);
+    WINDOW *menu = newwin(20, 80, y_max / 2 - 5, x_max / 2 - 35);
     refresh();
     keypad(menu, true);
-    wprintw(menu,
-            "/$$$$$$$  /$$   /$$ /$$   /$$  /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$\n\
+    wprintw(menu, "/$$$$$$$  /$$   /$$ /$$   /$$  /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$\n\
 | $$__  $$| $$  | $$| $$$ | $$ /$$__  $$| $$_____/ /$$__  $$| $$$ | $$\n\
 | $$  \\ $$| $$  | $$| $$$$| $$| $$  \\__/| $$      | $$  \\ $$| $$$$| $$\n\
 | $$  | $$| $$  | $$| $$ $$ $$| $$ /$$$$| $$$$$   | $$  | $$| $$ $$ $$\n\
@@ -161,16 +163,16 @@ const int displayMenu() {
         }
         choice = wgetch(menu);
         switch (choice) {
-            case KEY_UP:
-                if (curButton == 0) break;
-                curButton--;
-                break;
-            case KEY_DOWN:
-                if (curButton == options.size() - 1) break;
-                curButton++;
-                break;
-            default:
-                break;
+        case KEY_UP:
+            if (curButton == 0) break;
+            curButton--;
+            break;
+        case KEY_DOWN:
+            if (curButton == options.size() - 1) break;
+            curButton++;
+            break;
+        default:
+            break;
         }
         if (choice == 10) break;
     }
@@ -189,7 +191,7 @@ const int chooseDifficulty() {
     return -1;
 }
 
-const std::string readString(WINDOW* curWindow) {
+const std::string readString(WINDOW *curWindow) {
     // read only readable character
     //  character count limit could be implemented
     echo();
@@ -208,7 +210,7 @@ const std::string readString(WINDOW* curWindow) {
         } else if ((ch == 8 || ch == 127 || ch == KEY_BACKSPACE) && x_cur > x_origin) {
             input.pop_back();
             x_cur--;
-            mvwaddch(curWindow, y_cur, x_cur, 32);  // 32 = space
+            mvwaddch(curWindow, y_cur, x_cur, 32); // 32 = space
         }
     }
     getyx(curWindow, y_cur, x_cur);
@@ -223,7 +225,7 @@ const std::string readString(WINDOW* curWindow) {
 const std::string inputPlayerName() {
     int x_max, y_max;
     getmaxyx(stdscr, y_max, x_max);
-    WINDOW* field = newwin(3, x_max, y_max / 2, 0);
+    WINDOW *field = newwin(3, x_max, y_max / 2, 0);
     box(field, 0, 0);
     mvwprintw(field, 0, 0, "Please enter your name");
     wmove(field, 1, 1);
