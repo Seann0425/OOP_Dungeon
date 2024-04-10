@@ -198,7 +198,6 @@ const std::string readString(WINDOW* curWindow) {
     y_cur = y_origin;
     x_cur = x_origin;
     std::string input = "";
-    nocbreak();
     int ch;
     keypad(curWindow, true);
     while ((ch = wgetch(curWindow)) != '\n') {
@@ -217,7 +216,6 @@ const std::string readString(WINDOW* curWindow) {
         mvwaddch(curWindow, y_cur, x_cur, ' ');
         x_cur--;
     }
-    cbreak();
     noecho();
     return input;
 }
