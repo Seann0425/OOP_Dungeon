@@ -20,12 +20,8 @@ Scene::Scene() {
     dialogues = newwin(Y / 2, X - Y * 3 / 2, Y / 2, Y / 2);
     mini_map = newwin(Y / 2, Y, Y / 2, X - Y);
     refresh();
-    box(buttons, 0, 0);
     box(dialogues, 0, 0);
-    box(mini_map, 0, 0);
-    wrefresh(buttons);
     wrefresh(dialogues);
-    wrefresh(mini_map);
 }
 
 // TODO: update mini_map status, which includes current player room and regular rooms
@@ -55,6 +51,7 @@ void Scene::drawMiniMap(Dungeon *dungeon) {
 }
 
 void Scene::drawOptions() {
+    box(buttons, 0, 0);
     for (size_t i = 0; i < optionButtons.size(); i++) {
         mvwprintw(buttons, 1 + 2 * static_cast<int>(optionButtons.size() - 1 - i), 1, optionButtons[i].c_str());
     }
@@ -107,14 +104,18 @@ void Scene::showStatus(const Player *player) {
     wrefresh(dialogues);
 }
 
+void Scene::drawDialogues() {
+    box(dialogues, 0, 0);
+    wrefresh(dialogues);
+}
+
+// ====================exploring====================
 ExploringScene::ExploringScene() : Scene() {
     optionButtons = {"Exit", "Status"};
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
     room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
     refresh();
-    box(room, 0, 0);
-    wrefresh(room);
 }
 
 // y: 1~13, x:1~28
@@ -146,6 +147,51 @@ WINDOW *ExploringScene::getRoom() {
     return room;
 }
 
+void ExploringScene::clearScene() {
+    wclear(this->room);
+    wclear(this->buttons);
+    wclear(this->dialogues);
+    wclear(this->mini_map);
+    wrefresh(this->room);
+    wrefresh(this->buttons);
+    wrefresh(this->dialogues);
+    wrefresh(this->mini_map);
+}
+
+// ====================fighting====================
+
+// ====================trading====================
+TradingScene::TradingScene() : Scene() {
+    optionButtons = {"Exit", "Button1", "Button2"};
+    int y_max, x_max;
+    getmaxyx(stdscr, y_max, x_max);
+    vendor = newwin(y_max / 2, y_max, 0, x_max / 2 - y_max);
+    shop = newwin(y_max / 2, y_max, 0, x_max / 2);
+    refresh();
+}
+
+void TradingScene::clearScene() {
+    wclear(this->buttons);
+    wclear(this->vendor);
+    wclear(this->shop);
+    wrefresh(this->buttons);
+    wrefresh(this->vendor);
+    wrefresh(this->shop);
+}
+
+void TradingScene::drawVendor() {
+    wclear(vendor);
+    box(vendor, 0, 0);
+    wrefresh(vendor);
+}
+
+void TradingScene::drawShop() {
+    wclear(shop);
+    box(shop, 0, 0);
+    wrefresh(shop);
+}
+
+// ====================not class====================
 // experimental function
 void initGraphic() {
     initscr();
@@ -167,7 +213,7 @@ void initGraphic() {
     init_pair(TAKO_BACKGROUND, COLOR_BLACK, COLOR_TAKO);
     init_pair(REVERSE_PAIR, COLOR_BLACK, COLOR_WHITE);
     init_pair(TAKO_PAIR, COLOR_TAKO, COLOR_BLACK);
-    init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK);       // test
+    init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK); // test
     init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED); // test
     init_pair(GREEN_PAIR, COLOR_GREEN, COLOR_BLACK);
 }

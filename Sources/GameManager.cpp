@@ -24,3 +24,17 @@ bool runMenu(Dungeon *dungeon) {
     dungeon->createPlayer(name);
     return false;
 }
+
+Object *checkEvent(Player *player) {
+    const std::vector<Object *> &objects = player->getRoom()->getObjects();
+    const std::vector<std::pair<int, int>> &locations = player->getRoom()->getLocs();
+    const auto N = objects.size();
+    const auto y = player->getCoordinateY();
+    const auto x = player->getCoordinateX();
+    for (size_t i = 0; i < N; i++) {
+        if (locations[i].first == y && locations[i].second == x) {
+            return objects[i];
+        }
+    }
+    return nullptr;
+}

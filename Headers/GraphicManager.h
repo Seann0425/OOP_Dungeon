@@ -23,6 +23,8 @@ public:
     int inOptions();
     void drawOptions();
     void showStatus(const Player *);
+    virtual void clearScene() = 0;
+    virtual void drawDialogues();
 protected:
     // info for player
     WINDOW *buttons;
@@ -37,6 +39,7 @@ public:
     ExploringScene();
     void drawRoom(const Player *);
     WINDOW *getRoom();
+    void clearScene();
 private:
     WINDOW *room;
 };
@@ -53,9 +56,14 @@ private:
 class TradingScene : public Scene {
 public:
     TradingScene();
+    void drawVendor();
+    void drawShop();
+    WINDOW *getVendor();
+    WINDOW *getShop();
+    void clearScene();
 private:
     WINDOW *vendor; // left side
-    WINDOW *shop;   // right side
+    WINDOW *shop; // right side
 };
 
 // experimental function

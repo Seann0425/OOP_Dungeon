@@ -40,10 +40,17 @@ int main() {
 
     // TODO: intepret story
 
+    // exploring window
     ExploringScene exploring;
     exploring.drawMiniMap(dungeon);
     exploring.drawRoom(player);
     exploring.drawOptions();
+
+    // fighting window
+
+    // trading window
+    TradingScene trading;
+
     /* game loop
     assume scene can be overlapped after clear()
     while(exploring) {
@@ -53,8 +60,10 @@ int main() {
     */
     std::array<bool, 3> gameStatus{true, false, false}; // explore, fight, trade
     int input, option; // store keyboard input, some choice made by player
+    Object *target = nullptr;
     keypad(stdscr, true);
     while (gameStatus[0]) {
+        // casually exploring
         switch ((input = getch())) {
         case KEY_UP:
         case KEY_DOWN:
@@ -73,6 +82,30 @@ int main() {
             } else break;
         default:
             break;
+        }
+
+        // check if the game status needs to be changed
+        target = checkEvent(player);
+        if (target != nullptr) {
+            if (target->getTag() == "Monster") {
+                std::swap(gameStatus[0], gameStatus[1]);
+            } else if (target->getTag() == "NPC") {
+                std::swap(gameStatus[0], gameStatus[2]);
+            }
+        }
+
+        // trigger fighting
+
+        // trigger trading
+        if (gameStatus[2]) {
+            exploring.clearScene();
+            trading.drawVendor();
+            trading.drawShop();
+            trading.drawOptions();
+            trading.drawDialogues();
+            trading.drawMiniMap(dungeon);
+            while (gameStatus[2]) {
+            }
         }
 
         exploring.drawMiniMap(dungeon);

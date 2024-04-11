@@ -9,4 +9,5 @@
 #include "Item.h"
 
 bool runMenu(Dungeon *dungeon);
+Object *checkEvent(Player *);
 #endif
