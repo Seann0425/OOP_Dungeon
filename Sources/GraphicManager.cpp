@@ -6,6 +6,11 @@
 
 using namespace std::literals::string_literals;
 
+inline void newLine(WINDOW *win, int y, int x) {
+    getyx(win, y, x);
+    wmove(win, y + 1, 1);
+}
+
 // Scene Initialize
 Scene::Scene() {
     std::string test = "this is a test"s;
@@ -82,6 +87,22 @@ int Scene::inOptions() {
     }
     wrefresh(buttons);
     return static_cast<int>(curButton);
+}
+
+void Scene::showStatus(const Player *player) {
+    // currently show only HP, ATK, DEF
+    int y, x;
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    wprintw(dialogues, "Player Name: %s", player->getName().c_str());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Health: %d / %d", player->getCurrentHealth(), player->getMaxHealth());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Attack: %d", player->getAttack());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Defense: %d", player->getDefense());
+    wrefresh(dialogues);
 }
 
 ExploringScene::ExploringScene() : Scene() {

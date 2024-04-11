@@ -24,18 +24,18 @@ bool runMenu(Dungeon *dungeon) {
     while (option == 1) {
         option = displayMenu();
         switch (option) {
-            // start
-            case 0:
-                name = inputPlayerName();
-                break;
-            case 1:
-                chooseDifficulty();
-                break;
-            case 2:
-                endGraphic();
-                return true;
-            default:
-                break;
+        // start
+        case 0:
+            name = inputPlayerName();
+            break;
+        case 1:
+            chooseDifficulty();
+            break;
+        case 2:
+            endGraphic();
+            return true;
+        default:
+            break;
         }
     }
     dungeon->createPlayer(name);
@@ -74,26 +74,27 @@ int main() {
         else if (trading) {}
     }
     */
-    std::array<bool, 3> gameStatus{true, false, false};  // explore, fight, trade
-    int input, option;
+    std::array<bool, 3> gameStatus{true, false, false}; // explore, fight, trade
+    int input, option;                                  // store keyboard input, some choice made by player
     keypad(stdscr, true);
     while (gameStatus[0]) {
         switch ((input = getch())) {
-            case KEY_UP:
-            case KEY_DOWN:
-            case KEY_LEFT:
-            case KEY_RIGHT:
-                player->playerMove(input, exploring.getRoom());
+        case KEY_UP:
+        case KEY_DOWN:
+        case KEY_LEFT:
+        case KEY_RIGHT:
+            player->playerMove(input, exploring.getRoom());
+            break;
+        case 27: // ESC
+            option = exploring.inOptions();
+            if (option == 0) return 0;
+            else if (option == 1) {
+                // TODO: show status in dialogue
+                exploring.showStatus(player);
                 break;
-            case 27:  // ESC
-                option = exploring.inOptions();
-                if (option == 0) return 0;
-                else if (option == 1) {
-                    // TODO: show status in dialogue
-                    break;
-                } else break;
-            default:
-                break;
+            } else break;
+        default:
+            break;
         }
         exploring.drawMiniMap(dungeon);
         exploring.drawRoom(player);

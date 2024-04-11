@@ -1,7 +1,7 @@
 #include "../Headers/GameCharacter.h"
 
 GameCharacter::GameCharacter() = default;
-GameCharacter::GameCharacter(const std::string& n, const std::string tag, int mxHP, int curHP, int atk, int def) : Object(n, tag) {
+GameCharacter::GameCharacter(const std::string &n, const std::string tag, int mxHP, int curHP, int atk, int def) : Object(n, tag) {
     this->maxHealth = mxHP;
     this->currentHealth = curHP;
     this->attack = atk;
@@ -21,18 +21,18 @@ void GameCharacter::gotHealed(int amount) {
     }
     currentHealth += amount;
 }
-const bool GameCharacter::checkDead() const {
+bool GameCharacter::checkDead() const {
     return currentHealth == 0;
 }
-const int GameCharacter::getMaxHealth() const {
+int GameCharacter::getMaxHealth() const {
     return this->maxHealth;
 }
-const int GameCharacter::getCurrentHealth() const {
+int GameCharacter::getCurrentHealth() const {
     return this->currentHealth;
 }
-const int GameCharacter::getAttack() const {
+int GameCharacter::getAttack() const {
     return this->attack;
 }
-const int GameCharacter::getDefense() const {
+int GameCharacter::getDefense() const {
     return this->defense;
 }

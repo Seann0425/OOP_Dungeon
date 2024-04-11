@@ -18,14 +18,15 @@
 class Scene {
 public:
     Scene();
-    void drawMiniMap(Dungeon*);
+    void drawMiniMap(Dungeon *);
     int inOptions();
     void drawOptions();
+    void showStatus(const Player *);
 protected:
     // info for player
-    WINDOW* buttons;
-    WINDOW* dialogues;
-    WINDOW* mini_map;
+    WINDOW *buttons;
+    WINDOW *dialogues;
+    WINDOW *mini_map;
     std::vector<std::string> optionButtons;
 };
 
@@ -33,10 +34,10 @@ protected:
 class ExploringScene : public Scene {
 public:
     ExploringScene();
-    void drawRoom(const Player*);
-    WINDOW* getRoom();
+    void drawRoom(const Player *);
+    WINDOW *getRoom();
 private:
-    WINDOW* room;
+    WINDOW *room;
 };
 
 // player fighting
@@ -44,7 +45,7 @@ class FightingScene : public Scene {
 public:
     FightingScene();
 private:
-    WINDOW* battle;
+    WINDOW *battle;
 };
 
 // player having fun trading with NPCs
@@ -52,8 +53,8 @@ class TradingScene : public Scene {
 public:
     TradingScene();
 private:
-    WINDOW* vendor;  // left side
-    WINDOW* shop;    // right side
+    WINDOW *vendor; // left side
+    WINDOW *shop;   // right side
 };
 
 // experimental function
