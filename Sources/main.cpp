@@ -4,6 +4,7 @@
 
 #include "../Headers/Dungeon.h"
 #include "../Headers/Entity.h"
+#include "../Headers/GameManager.h"
 #include "../Headers/GraphicManager.h"
 #include "../Headers/Item.h"
 
@@ -16,31 +17,6 @@ int Player::defense_initializer = std::numeric_limits<int>::min();
 const int &Player::INIT_HEALTH = Player::health_initializer;
 const int &Player::INIT_ATTACK = Player::attack_initializer;
 const int &Player::INIT_DEFENSE = Player::defense_initializer;
-
-// game menu function, return true if exit
-bool runMenu(Dungeon *dungeon) {
-    int option = 1;
-    std::string name;
-    while (option == 1) {
-        option = displayMenu();
-        switch (option) {
-        // start
-        case 0:
-            name = inputPlayerName();
-            break;
-        case 1:
-            chooseDifficulty();
-            break;
-        case 2:
-            endGraphic();
-            return true;
-        default:
-            break;
-        }
-    }
-    dungeon->createPlayer(name);
-    return false;
-}
 
 int main() {
     JSON Settings;
@@ -98,6 +74,7 @@ int main() {
         default:
             break;
         }
+
         // check event
 
         exploring.drawMiniMap(dungeon);
