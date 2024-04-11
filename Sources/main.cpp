@@ -52,7 +52,7 @@ int main() {
     }
     */
     std::array<bool, 3> gameStatus{true, false, false}; // explore, fight, trade
-    int input, option;                                  // store keyboard input, some choice made by player
+    int input, option; // store keyboard input, some choice made by player
     keypad(stdscr, true);
     while (gameStatus[0]) {
         switch ((input = getch())) {
@@ -74,8 +74,6 @@ int main() {
         default:
             break;
         }
-
-        // check event
 
         exploring.drawMiniMap(dungeon);
         exploring.drawRoom(player);

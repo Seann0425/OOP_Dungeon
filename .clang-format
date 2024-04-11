@@ -6,3 +6,4 @@ ColumnLimit: 150
 AllowShortFunctionsOnASingleLine: false
 EmptyLineBeforeAccessModifier: Never
 AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AlignTrailingComments: Never
