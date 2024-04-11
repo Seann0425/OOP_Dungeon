@@ -2,9 +2,10 @@
 #define ROOM
 
 #include <array>
+#include <utility>
 #include <vector>
 
-#include "Object.h"
+#include "GameCharacter.h"
 
 enum Ecosystem { Desert, Forest, Swamp };
 
@@ -18,9 +19,13 @@ public:
     void setEco(Ecosystem);
     void setExit(size_t, size_t);
     const std::array<bool, 4> getExit() const;
+    void addObject(Object *, int, int);
+    const std::vector<Object *> &getObjects() const;
+    const std::vector<std::pair<int, int>> &getLocs() const;
 private:
-    std::vector<Object*> objects;
+    std::vector<Object *> objects;
+    std::vector<std::pair<int, int>> locations;
     Ecosystem eco;
-    std::array<bool, 4> hasExit;  // up, down, left, right
+    std::array<bool, 4> hasExit; // up, down, left, right
 };
 #endif

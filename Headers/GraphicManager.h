@@ -13,6 +13,7 @@
 #define TAKO_PAIR 3
 #define RED_PAIR 4
 #define RED_BACKGROUND 5
+#define GREEN_PAIR 6
 
 // base class for different scene
 class Scene {

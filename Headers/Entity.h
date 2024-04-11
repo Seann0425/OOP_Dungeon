@@ -21,14 +21,15 @@ private:
 class NPC : public GameCharacter {
 public:
     NPC();
+    NPC(const std::string &);
     void listCommodity();
     // take commodity id as parameter and return successful or not
     bool sellItem(int);
     // return successful or not since some items might not be sellable
     bool buyItem();
 private:
-    std::unordered_map<std::string, std::string> scripts;  // not sure if vector is better
-    std::vector<std::pair<Item *, int>> commodity;         // item, amount
+    std::unordered_map<std::string, std::string> scripts; // not sure if vector is better
+    std::vector<std::pair<Item *, int>> commodity;        // item, amount
 };
 
 class Player : public GameCharacter {
@@ -43,15 +44,15 @@ public:
     static void health_init(int);
     static void attack_init(int);
     static void defense_init(int);
-    void addEquipment(Equipment *);    // not implemented
-    void addConsumable(Consumable *);  // not implemented
-    void changeStatus(int);            // equipment for atk or def, not implemented
+    void addEquipment(Equipment *);   // not implemented
+    void addConsumable(Consumable *); // not implemented
+    void changeStatus(int);           // equipment for atk or def, not implemented
     void setRoom(Room *);
     void setCoordinate(int, int);
     const int getCoordinateY() const;
     const int getCoordinateX() const;
     const Room *getRoom() const;
-    void playerMove(int, WINDOW *);
+    int playerMove(int, WINDOW *);
 private:
     static int health_initializer;
     static int attack_initializer;
@@ -59,7 +60,7 @@ private:
     std::vector<Equipment *> inventory;
     std::vector<Consumable *> sack;
     Room *currentRoom;
-    std::pair<int, int> poisoned;    // time / dps
-    std::pair<int, int> coordinate;  // y, x
+    std::pair<int, int> poisoned;   // time / dps
+    std::pair<int, int> coordinate; // y, x
 };
 #endif

@@ -17,3 +17,16 @@ void Room::setExit(size_t y, size_t x) {
 const std::array<bool, 4> Room::getExit() const {
     return this->hasExit;
 }
+
+void Room::addObject(Object *object, int y, int x) {
+    objects.push_back(object);
+    locations.emplace_back(y, x);
+}
+
+const std::vector<Object *> &Room::getObjects() const {
+    return this->objects;
+}
+
+const std::vector<std::pair<int, int>> &Room::getLocs() const {
+    return this->locations;
+}

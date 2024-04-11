@@ -55,6 +55,7 @@ int main() {
     initGraphic();
     Dungeon *dungeon = new Dungeon;
     dungeon->initGame();
+    dungeon->generateObject();
 
     // display menu
     // runMenu() has called createPlayer()
@@ -83,7 +84,8 @@ int main() {
         case KEY_DOWN:
         case KEY_LEFT:
         case KEY_RIGHT:
-            player->playerMove(input, exploring.getRoom());
+            option = player->playerMove(input, exploring.getRoom());
+            if (option != -1) dungeon->changeRoom(option);
             break;
         case 27: // ESC
             option = exploring.inOptions();
@@ -96,6 +98,8 @@ int main() {
         default:
             break;
         }
+        // check event
+
         exploring.drawMiniMap(dungeon);
         exploring.drawRoom(player);
         exploring.drawOptions();

@@ -30,6 +30,8 @@ Scene::Scene() {
 
 // TODO: update mini_map status, which includes current player room and regular rooms
 void Scene::drawMiniMap(Dungeon *dungeon) {
+    wclear(mini_map);
+    box(mini_map, 0, 0);
     int y, x;
     int Y, X;
     getmaxyx(stdscr, Y, X);
@@ -117,6 +119,7 @@ ExploringScene::ExploringScene() : Scene() {
 
 // y: 1~13, x:1~28
 void ExploringScene::drawRoom(const Player *player) {
+    wclear(this->room);
     box(this->room, 0, 0);
     mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
     std::array<bool, 4> hasExit = player->getRoom()->getExit();
@@ -124,8 +127,19 @@ void ExploringScene::drawRoom(const Player *player) {
     if (hasExit[1]) mvwaddch(this->room, Room::room_height - 1, Room::exit_X, ' ');
     if (hasExit[2]) mvwaddch(this->room, Room::exit_Y, 0, ' ');
     if (hasExit[3]) mvwaddch(this->room, Room::exit_Y, Room::room_width - 1, ' ');
-    wrefresh(this->room);
+
     // TODO: display object
+    const std::vector<Object *> &objects = player->getRoom()->getObjects();
+    const std::vector<std::pair<int, int>> &locations = player->getRoom()->getLocs();
+    const auto N = objects.size();
+    for (size_t i = 0; i < N; i++) {
+        if (objects[i]->getTag() == "NPC") {
+            wattron(this->room, COLOR_PAIR(GREEN_PAIR));
+            mvwaddch(this->room, locations[i].first, locations[i].second, 'N');
+            wattroff(this->room, COLOR_PAIR(GREEN_PAIR));
+        }
+    }
+    wrefresh(this->room);
 }
 
 WINDOW *ExploringScene::getRoom() {
@@ -155,6 +169,7 @@ void initGraphic() {
     init_pair(TAKO_PAIR, COLOR_TAKO, COLOR_BLACK);
     init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK);       // test
     init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED); // test
+    init_pair(GREEN_PAIR, COLOR_GREEN, COLOR_BLACK);
 }
 
 const int displayMenu() {

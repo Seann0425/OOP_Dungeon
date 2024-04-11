@@ -1,6 +1,6 @@
 #include "../Headers/Dungeon.h"
 
-Dungeon::Dungeon() : rooms(3, std::vector<Room *>(3)){
+Dungeon::Dungeon() : rooms(3, std::vector<Room *>(3)) {
     // generate rooms
     for (size_t y = 0; y < 3; y++) { // FIXME: maybe there are a more elegant way?
         for (size_t x = 0; x < 3; x++) {
@@ -46,4 +46,32 @@ const std::pair<int, int> Dungeon::getCurrentIndex() const {
 
 Player *Dungeon::getPlayer() const {
     return player;
+}
+
+void Dungeon::changeRoom(int direction) {
+    // {0, 1, 2, 3} -> {up, down, left, right}
+    switch (direction) {
+    case 0:
+        current_room_idx.first--;
+        break;
+    case 1:
+        current_room_idx.first++;
+        break;
+    case 2:
+        current_room_idx.second--;
+        break;
+    case 3:
+        current_room_idx.second++;
+        break;
+    default:
+        break;
+    }
+    this->player->setRoom(rooms[current_room_idx.first][current_room_idx.second]);
+}
+
+void Dungeon::generateObject() {
+    // TODO: make it random (Fisher-Yates Shuffle Algorithm)
+    // a NPC that will give you the key to the boss room
+    NPC *keyHolder = new NPC("Tester");
+    key_room->addObject(keyHolder, 7, 15);
 }

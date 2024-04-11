@@ -17,17 +17,17 @@ public:
     // set each room its utility, such as boss room, different eco
     // or the room that contains the key to the boss room
     void initGame();
-    void createPlayer(const std::string&);
-    void createMap();
-    void runDungeon();
-    Player* getPlayer() const;
+    void createPlayer(const std::string &);
+    Player *getPlayer() const;
     const std::pair<int, int> getCurrentIndex() const;
+    void changeRoom(int);
+    void generateObject();
 private:
-    Player* player;
-    std::vector<std::vector<Room*>> rooms;  // 3 * 3
-    Room* boss_room;
-    Room* key_room;
-    Room* init_room;
+    Player *player;
+    std::vector<std::vector<Room *>> rooms; // 3 * 3
+    Room *boss_room;
+    Room *key_room;
+    Room *init_room;
     std::pair<int, int> current_room_idx;
 };
 
