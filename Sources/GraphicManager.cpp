@@ -58,6 +58,27 @@ void Scene::drawOptions() {
     wrefresh(buttons);
 }
 
+void Scene::showStatus(const Player *player) {
+    // currently show only HP, ATK, DEF
+    int y, x;
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    wprintw(dialogues, "Player Name: %s", player->getName().c_str());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Health: %d / %d", player->getCurrentHealth(), player->getMaxHealth());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Attack: %d", player->getAttack());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Defense: %d", player->getDefense());
+    wrefresh(dialogues);
+}
+
+void Scene::drawDialogues() {
+    box(dialogues, 0, 0);
+    wrefresh(dialogues);
+}
+
 int Scene::inOptions() {
     keypad(buttons, true);
     int keyPressed;
@@ -86,27 +107,6 @@ int Scene::inOptions() {
     }
     wrefresh(buttons);
     return static_cast<int>(curButton);
-}
-
-void Scene::showStatus(const Player *player) {
-    // currently show only HP, ATK, DEF
-    int y, x;
-    wclear(dialogues);
-    box(dialogues, 0, 0);
-    wmove(dialogues, 1, 1);
-    wprintw(dialogues, "Player Name: %s", player->getName().c_str());
-    newLine(dialogues, y, x);
-    wprintw(dialogues, "Health: %d / %d", player->getCurrentHealth(), player->getMaxHealth());
-    newLine(dialogues, y, x);
-    wprintw(dialogues, "Attack: %d", player->getAttack());
-    newLine(dialogues, y, x);
-    wprintw(dialogues, "Defense: %d", player->getDefense());
-    wrefresh(dialogues);
-}
-
-void Scene::drawDialogues() {
-    box(dialogues, 0, 0);
-    wrefresh(dialogues);
 }
 
 // ====================exploring====================
@@ -179,9 +179,19 @@ void TradingScene::clearScene() {
     wrefresh(this->shop);
 }
 
-void TradingScene::drawVendor() {
+void TradingScene::drawVendor(const NPC *npc) {
+    int y, x;
     wclear(vendor);
     box(vendor, 0, 0);
+    wattron(vendor, COLOR_PAIR(GREEN_PAIR));
+    mvwprintw(vendor, 0, 0, npc->getName().c_str());
+    wattroff(vendor, COLOR_PAIR(GREEN_PAIR));
+    // print npc image
+    wattron(vendor, COLOR_PAIR(RED_PAIR));
+    mvwprintw(vendor, 1, 1, "An error occured while ");
+    newLine(vendor, y, x);
+    wprintw(vendor, "loading the NPC's image.");
+    wattroff(vendor, COLOR_PAIR(RED_PAIR));
     wrefresh(vendor);
 }
 

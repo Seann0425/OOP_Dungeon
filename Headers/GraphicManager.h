@@ -20,9 +20,9 @@ class Scene {
 public:
     Scene();
     void drawMiniMap(Dungeon *);
-    int inOptions();
     void drawOptions();
     void showStatus(const Player *);
+    int inOptions();
     virtual void clearScene() = 0;
     virtual void drawDialogues();
 protected:
@@ -56,7 +56,7 @@ private:
 class TradingScene : public Scene {
 public:
     TradingScene();
-    void drawVendor();
+    void drawVendor(const NPC *);
     void drawShop();
     WINDOW *getVendor();
     WINDOW *getShop();

@@ -99,12 +99,21 @@ int main() {
         // trigger trading
         if (gameStatus[2]) {
             exploring.clearScene();
-            trading.drawVendor();
+            trading.drawVendor(static_cast<NPC *>(target));
             trading.drawShop();
             trading.drawOptions();
             trading.drawDialogues();
             trading.drawMiniMap(dungeon);
             while (gameStatus[2]) {
+                switch ((input = getch())) {
+                case 27: // ESC
+                    option = trading.inOptions();
+                    if (option == 0) return 0;
+                    else break;
+                default:
+                    break;
+                }
+                trading.drawOptions();
             }
         }
 
