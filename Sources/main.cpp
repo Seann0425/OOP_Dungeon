@@ -98,8 +98,9 @@ int main() {
 
         // trigger trading
         if (gameStatus[2]) {
+            NPC *npc = static_cast<NPC *>(target);
             exploring.clearScene();
-            trading.drawVendor(static_cast<NPC *>(target));
+            trading.drawVendor(npc);
             trading.drawShop();
             trading.drawOptions();
             trading.drawDialogues();
@@ -110,16 +111,25 @@ int main() {
                     option = trading.inOptions();
                     if (option == 0) return 0;
                     else break;
+                case 120: // X
+                    std::swap(gameStatus[0], gameStatus[2]);
+                    break;
+                case 10: // Enter
+                    npc->activated(trading.getShop(), trading.getDialogues());
+                    std::swap(gameStatus[0], gameStatus[2]);
+                    break;
                 default:
                     break;
                 }
                 trading.drawOptions();
             }
+            trading.clearScene();
         }
 
         exploring.drawMiniMap(dungeon);
         exploring.drawRoom(player);
         exploring.drawOptions();
+        exploring.drawDialogues();
     }
     return 0;
 }

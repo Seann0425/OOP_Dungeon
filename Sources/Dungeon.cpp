@@ -72,6 +72,6 @@ void Dungeon::changeRoom(int direction) {
 void Dungeon::generateObject() {
     // TODO: make it random (Fisher-Yates Shuffle Algorithm)
     // a NPC that will give you the key to the boss room
-    NPC *keyHolder = new NPC("Tester");
+    Tester *keyHolder = new Tester("Tester");
     key_room->addObject(keyHolder, 7, 15);
 }

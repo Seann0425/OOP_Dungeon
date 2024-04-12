@@ -27,9 +27,10 @@ public:
     bool sellItem(int);
     // return successful or not since some items might not be sellable
     bool buyItem();
+    virtual void activated(WINDOW *, WINDOW *);
 private:
     std::unordered_map<std::string, std::string> scripts; // not sure if vector is better
-    std::vector<std::pair<Item *, int>> commodity;        // item, amount
+    std::vector<std::pair<Item *, int>> commodity; // item, amount
 };
 
 class Player : public GameCharacter {
@@ -44,9 +45,9 @@ public:
     static void health_init(int);
     static void attack_init(int);
     static void defense_init(int);
-    void addEquipment(Equipment *);   // not implemented
+    void addEquipment(Equipment *); // not implemented
     void addConsumable(Consumable *); // not implemented
-    void changeStatus(int);           // equipment for atk or def, not implemented
+    void changeStatus(int); // equipment for atk or def, not implemented
     void setRoom(Room *);
     void setCoordinate(int, int);
     const int getCoordinateY() const;
@@ -60,7 +61,14 @@ private:
     std::vector<Equipment *> inventory;
     std::vector<Consumable *> sack;
     Room *currentRoom;
-    std::pair<int, int> poisoned;   // time / dps
+    std::pair<int, int> poisoned; // time / dps
     std::pair<int, int> coordinate; // y, x
+};
+
+class Tester : public NPC {
+public:
+    Tester();
+    Tester(const std::string &);
+    void activated(WINDOW *, WINDOW *);
 };
 #endif

@@ -16,6 +16,11 @@ NPC::NPC(const std::string &name) {
     this->name = name;
 }
 
+void NPC::activated(WINDOW *shop, WINDOW *dialogues) {
+    mvwprintw(dialogues, 1, 1, "ERROR");
+    wrefresh(dialogues);
+}
+
 Player::Player() : GameCharacter() {
     this->tag = "Player";
 }
@@ -96,4 +101,13 @@ int Player::playerMove(int direction, WINDOW *room) {
         if (coordinate.second > Room::room_width - 2) coordinate.second = Room::room_width - 2;
     }
     return newRoom;
+}
+
+Tester::Tester() = default;
+
+Tester::Tester(const std::string &name) : NPC(name) {
+}
+
+void Tester::activated(WINDOW *shop, WINDOW *dialogues) {
+    mvwprintw(dialogues, 1, 1, "Developing");
 }

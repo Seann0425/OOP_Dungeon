@@ -23,6 +23,7 @@ public:
     void drawOptions();
     void showStatus(const Player *);
     int inOptions();
+    WINDOW *getDialogues();
     virtual void clearScene() = 0;
     virtual void drawDialogues();
 protected:
@@ -61,6 +62,7 @@ public:
     WINDOW *getVendor();
     WINDOW *getShop();
     void clearScene();
+    void drawDialogues();
 private:
     WINDOW *vendor; // left side
     WINDOW *shop; // right side

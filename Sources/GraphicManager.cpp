@@ -109,6 +109,10 @@ int Scene::inOptions() {
     return static_cast<int>(curButton);
 }
 
+WINDOW *Scene::getDialogues() {
+    return this->dialogues;
+}
+
 // ====================exploring====================
 ExploringScene::ExploringScene() : Scene() {
     optionButtons = {"Exit", "Status"};
@@ -174,9 +178,11 @@ void TradingScene::clearScene() {
     wclear(this->buttons);
     wclear(this->vendor);
     wclear(this->shop);
+    wclear(this->dialogues);
     wrefresh(this->buttons);
     wrefresh(this->vendor);
     wrefresh(this->shop);
+    wrefresh(this->dialogues);
 }
 
 void TradingScene::drawVendor(const NPC *npc) {
@@ -198,7 +204,25 @@ void TradingScene::drawVendor(const NPC *npc) {
 void TradingScene::drawShop() {
     wclear(shop);
     box(shop, 0, 0);
+    mvwprintw(shop, 0, 0, "Shop");
     wrefresh(shop);
+}
+
+void TradingScene::drawDialogues() {
+    int y, x;
+    getmaxyx(dialogues, y, x);
+    box(dialogues, 0, 0);
+    mvwprintw(dialogues, y - 3, 1, "Press X to leave.");
+    mvwprintw(dialogues, y - 2, 1, "Press Enter to continue.");
+    wrefresh(dialogues);
+}
+
+WINDOW *TradingScene::getShop() {
+    return this->shop;
+}
+
+WINDOW *TradingScene::getVendor() {
+    return this->vendor;
 }
 
 // ====================not class====================
