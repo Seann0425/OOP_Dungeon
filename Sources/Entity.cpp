@@ -16,16 +16,19 @@ NPC::NPC(const std::string &name) {
     this->name = name;
 }
 
-void NPC::activated(WINDOW *shop, WINDOW *dialogues) {
+void NPC::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 1, 1, "ERROR");
-    wrefresh(dialogues);
+    mvwprintw(dialogues, 2, 1, "Press any key to continue.");
+    wgetch(dialogues);
 }
 
 Player::Player() : GameCharacter() {
     this->tag = "Player";
+    hasKey = false;
 }
 
 Player::Player(const std::string &name, int mxHP, int curHP, int atk, int def) : GameCharacter(name, "Player", mxHP, curHP, atk, def) {
+    hasKey = false;
 }
 
 void Player::health_init(int hp) {
@@ -48,10 +51,10 @@ void Player::setCoordinate(int y, int x) {
     this->coordinate = std::make_pair(y, x);
 }
 
-// void Player::changeCoordinate(int _y, int _x) {
-//     this->coordinate.first += _y;
-//     this->coordinate.second += _x;
-// }
+void Player::changeCoordinate(int _y, int _x) {
+    this->coordinate.first += _y;
+    this->coordinate.second += _x;
+}
 
 const int Player::getCoordinateY() const {
     return this->coordinate.first;
@@ -103,11 +106,23 @@ int Player::playerMove(int direction, WINDOW *room) {
     return newRoom;
 }
 
+bool Player::checkKey() const {
+    return this->hasKey;
+}
+
+void Player::setKey(bool has) {
+    this->hasKey = has;
+}
+
 Tester::Tester() = default;
 
 Tester::Tester(const std::string &name) : NPC(name) {
 }
 
-void Tester::activated(WINDOW *shop, WINDOW *dialogues) {
-    mvwprintw(dialogues, 1, 1, "Developing");
+void Tester::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
+    player->setKey(true);
+    mvwprintw(dialogues, 1, 1, "Scripts are under developing.");
+    mvwprintw(dialogues, 2, 1, "But you got a key from Tester somehow.");
+    mvwprintw(dialogues, 3, 1, "Press any key to continue.");
+    wgetch(dialogues);
 }

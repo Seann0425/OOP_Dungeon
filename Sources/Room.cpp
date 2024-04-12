@@ -6,7 +6,11 @@ void Room::setEco(Ecosystem _e) {
     this->eco = _e;
 }
 
-void Room::setExit(size_t y, size_t x) {
+void Room::setExit(size_t y, size_t x, bool isBoosRoom) {
+    if (isBoosRoom) {
+        hasExit = {};
+        return;
+    }
     // up, down, left, right
     this->hasExit[0] = (y > 0);
     this->hasExit[1] = (y < 2);

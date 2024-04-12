@@ -17,7 +17,7 @@ public:
     static const int exit_Y = 7;
     static const int exit_X = 15;
     void setEco(Ecosystem);
-    void setExit(size_t, size_t);
+    void setExit(size_t, size_t, bool);
     const std::array<bool, 4> getExit() const;
     void addObject(Object *, int, int);
     const std::vector<Object *> &getObjects() const;

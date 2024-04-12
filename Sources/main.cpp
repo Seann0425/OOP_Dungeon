@@ -70,7 +70,7 @@ int main() {
         case KEY_LEFT:
         case KEY_RIGHT:
             option = player->playerMove(input, exploring.getRoom());
-            if (option != -1) dungeon->changeRoom(option);
+            if (option != -1) dungeon->changeRoom(option, exploring.getDialogues());
             break;
         case 27: // ESC
             option = exploring.inOptions();
@@ -115,7 +115,10 @@ int main() {
                     std::swap(gameStatus[0], gameStatus[2]);
                     break;
                 case 10: // Enter
-                    npc->activated(trading.getShop(), trading.getDialogues());
+                    wclear(trading.getDialogues());
+                    box(trading.getDialogues(), 0, 0);
+                    wrefresh(trading.getDialogues());
+                    npc->activated(trading.getShop(), trading.getDialogues(), player);
                     std::swap(gameStatus[0], gameStatus[2]);
                     break;
                 default:

@@ -18,7 +18,7 @@ Dungeon::Dungeon() : rooms(3, std::vector<Room *>(3)) {
     // set exit
     for (size_t y = 0; y < 3; y++) {
         for (size_t x = 0; x < 3; x++) {
-            rooms[y][x]->setExit(y, x);
+            rooms[y][x]->setExit(y, x, rooms[y][x] == boss_room);
         }
     }
 }
@@ -48,25 +48,49 @@ Player *Dungeon::getPlayer() const {
     return player;
 }
 
-void Dungeon::changeRoom(int direction) {
+void Dungeon::changeRoom(int direction, WINDOW *dialogues) {
     // {0, 1, 2, 3} -> {up, down, left, right}
+    std::pair<int, int> &roomIdx = current_room_idx;
+    int originY = roomIdx.first, originX = roomIdx.second;
     switch (direction) {
     case 0:
-        current_room_idx.first--;
+        roomIdx.first--;
         break;
     case 1:
-        current_room_idx.first++;
+        roomIdx.first++;
         break;
     case 2:
-        current_room_idx.second--;
+        roomIdx.second--;
         break;
     case 3:
-        current_room_idx.second++;
+        roomIdx.second++;
         break;
     default:
         break;
     }
-    this->player->setRoom(rooms[current_room_idx.first][current_room_idx.second]);
+    if (boss_room != rooms[roomIdx.first][roomIdx.second]) {
+        player->setRoom(rooms[roomIdx.first][roomIdx.second]);
+    } else {
+        wclear(dialogues);
+        box(dialogues, 0, 0);
+        if (player->checkKey()) {
+            mvwprintw(dialogues, 1, 1, "You opened the door with the key!");
+            mvwprintw(dialogues, 2, 1, "Enjoy the boss fight!!");
+            player->setKey(false);
+            player->setRoom(rooms[roomIdx.first][roomIdx.second]);
+        } else {
+            mvwprintw(dialogues, 1, 1, "The door is locked...");
+            roomIdx.first = originY, roomIdx.second = originX;
+            if (player->getCoordinateY() == Room::exit_Y && player->getCoordinateX() == 1) {
+                // from left door
+                player->setCoordinate(player->getCoordinateY(), Room::room_width - 2);
+            } else if (player->getCoordinateY() == Room::room_height - 2 && player->getCoordinateX() == Room::exit_X) {
+                // from down door
+                player->setCoordinate(1, player->getCoordinateX());
+            }
+        }
+        wrefresh(dialogues);
+    }
 }
 
 void Dungeon::generateObject() {

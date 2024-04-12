@@ -2,6 +2,7 @@
 #define DUNGEON
 
 #include <ctime>
+#include <ncurses/ncurses.h>
 #include <random>
 #include <utility>
 #include <vector>
@@ -20,7 +21,7 @@ public:
     void createPlayer(const std::string &);
     Player *getPlayer() const;
     const std::pair<int, int> getCurrentIndex() const;
-    void changeRoom(int);
+    void changeRoom(int, WINDOW *);
     void generateObject();
 private:
     Player *player;

@@ -11,6 +11,8 @@
 #include "Item.h"
 #include "Room.h"
 
+class Player;
+
 class Monster : public GameCharacter {
 public:
     Monster();
@@ -27,7 +29,7 @@ public:
     bool sellItem(int);
     // return successful or not since some items might not be sellable
     bool buyItem();
-    virtual void activated(WINDOW *, WINDOW *);
+    virtual void activated(WINDOW *, WINDOW *, Player *);
 private:
     std::unordered_map<std::string, std::string> scripts; // not sure if vector is better
     std::vector<std::pair<Item *, int>> commodity; // item, amount
@@ -50,10 +52,13 @@ public:
     void changeStatus(int); // equipment for atk or def, not implemented
     void setRoom(Room *);
     void setCoordinate(int, int);
+    void changeCoordinate(int, int);
     const int getCoordinateY() const;
     const int getCoordinateX() const;
     const Room *getRoom() const;
     int playerMove(int, WINDOW *);
+    bool checkKey() const;
+    void setKey(bool);
 private:
     static int health_initializer;
     static int attack_initializer;
@@ -63,12 +68,13 @@ private:
     Room *currentRoom;
     std::pair<int, int> poisoned; // time / dps
     std::pair<int, int> coordinate; // y, x
+    bool hasKey;
 };
 
 class Tester : public NPC {
 public:
     Tester();
     Tester(const std::string &);
-    void activated(WINDOW *, WINDOW *);
+    void activated(WINDOW *, WINDOW *, Player *);
 };
 #endif

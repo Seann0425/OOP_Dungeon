@@ -71,6 +71,8 @@ void Scene::showStatus(const Player *player) {
     wprintw(dialogues, "Attack: %d", player->getAttack());
     newLine(dialogues, y, x);
     wprintw(dialogues, "Defense: %d", player->getDefense());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Key: %d", player->checkKey());
     wrefresh(dialogues);
 }
 
