@@ -76,7 +76,9 @@ int main() {
             option = exploring.inOptions();
             if (option == 0) return 0;
             else if (option == 1) {
-                // TODO: show status in dialogue
+                exploring.showInventory(player);
+                break;
+            } else if (option == 2) {
                 exploring.showStatus(player);
                 break;
             } else break;

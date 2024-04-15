@@ -22,13 +22,34 @@ void NPC::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     wgetch(dialogues);
 }
 
-Player::Player() : GameCharacter() {
+Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX) {
     this->tag = "Player";
     hasKey = false;
+    this->sack[0] = std::make_pair(new Consumable("Bread", 0, 0, 1, 0, 0, false), 0);
+    sack[0].first->setDescription("Restore 1 hunger.");
+    this->sack[1] = std::make_pair(new Consumable("Steak", 0, 0, 3, 0, 0, false), 0);
+    sack[1].first->setDescription("Restore 3 hunger.");
+    this->sack[2] = std::make_pair(new Consumable("Cookie", 0, 0, 5, 0, 0, false), 0);
+    sack[2].first->setDescription("Cookies restore 5 hunger <3");
+    this->sack[3] = std::make_pair(new Consumable("Bottle of Water", 0, 0, 0, 1, 0, false), 0);
+    sack[3].first->setDescription("Restore 1 thirsty.");
+    this->sack[4] = std::make_pair(new Consumable("Milk", 0, 0, 0, 0, 0, true), 0);
+    sack[4].first->setDescription("Clear debuffs.");
 }
 
-Player::Player(const std::string &name, int mxHP, int curHP, int atk, int def) : GameCharacter(name, "Player", mxHP, curHP, atk, def) {
+Player::Player(const std::string &name, int mxHP, int curHP, int atk, int def)
+    : GameCharacter(name, "Player", mxHP, curHP, atk, def), sack(Player::CONSUMABLE_MAX) {
     hasKey = false;
+    this->sack[0] = std::make_pair(new Consumable("Bread", 0, 0, 1, 0, 0, false), 0);
+    sack[0].first->setDescription("Restore 1 hunger.");
+    this->sack[1] = std::make_pair(new Consumable("Steak", 0, 0, 3, 0, 0, false), 0);
+    sack[1].first->setDescription("Restore 3 hunger.");
+    this->sack[2] = std::make_pair(new Consumable("Cookie", 0, 0, 5, 0, 0, false), 0);
+    sack[2].first->setDescription("Cookies restore 5 hunger <3");
+    this->sack[3] = std::make_pair(new Consumable("Bottle of Water", 0, 0, 0, 1, 0, false), 0);
+    sack[3].first->setDescription("Restore 1 thirsty.");
+    this->sack[4] = std::make_pair(new Consumable("Milk", 0, 0, 0, 0, 0, true), 0);
+    sack[4].first->setDescription("Clear debuffs.");
 }
 
 void Player::health_init(int hp) {
@@ -114,6 +135,25 @@ void Player::setKey(bool has) {
     this->hasKey = has;
 }
 
+void Player::addConsumable(size_t id, int amount) {
+    this->sack[id].second += amount;
+}
+
+int Player::getHunger() const {
+    return this->hunger;
+}
+
+int Player::getThirsty() const {
+    return this->thirsty;
+}
+
+const std::vector<Equipment *> &Player::getInventory() const {
+    return this->inventory;
+}
+const std::vector<std::pair<Consumable *, int>> &Player::getSack() const {
+    return this->sack;
+}
+
 Tester::Tester() = default;
 
 Tester::Tester(const std::string &name) : NPC(name) {
@@ -125,4 +165,21 @@ void Tester::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 2, 1, "But you got a key from Tester somehow.");
     mvwprintw(dialogues, 3, 1, "Press any key to continue.");
     wgetch(dialogues);
+}
+
+Helper::Helper() = default;
+Helper::Helper(const std::string &name) : NPC(name) {
+}
+void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
+    mvwprintw(dialogues, 1, 1, "The Developer has no time to build this dungeon.");
+    mvwprintw(dialogues, 2, 1, "So I'm here to give you every items you need to beat the game.");
+    mvwprintw(dialogues, 3, 1, "And he's very sorry about this.");
+    mvwprintw(dialogues, 4, 1, "Remember to check your inventory.");
+    mvwprintw(dialogues, 5, 1, "Press any key to continue.");
+    wgetch(dialogues);
+    player->addConsumable(0, Helper::bread);
+    player->addConsumable(1, Helper::steak);
+    player->addConsumable(2, Helper::cookie);
+    player->addConsumable(3, Helper::bottle_of_water);
+    player->addConsumable(4, Helper::milk);
 }

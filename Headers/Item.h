@@ -8,15 +8,17 @@
 class Item : public Object {
 public:
     Item();
-    Item(std::string&, const std::string, int);
+    Item(std::string &, const std::string, int);
+    void setDescription(std::string _d);
 protected:
     int price;
+    std::string description;
 };
 
 class Equipment : public Item {
 public:
     Equipment();
-    Equipment(std::string&, int, int, int, int);
+    Equipment(std::string &, int, int, int, int);
     const int getHealth() const;
     const int getAttack() const;
     const int getDefense() const;
@@ -29,7 +31,7 @@ private:
 class Consumable : public Item {
 public:
     Consumable();
-    Consumable(std::string&, int, int, int, int, int, bool);
+    Consumable(std::string, int, int, int, int, int, bool);
     const int getHealth() const;
     const int getHunger() const;
     const int getThirsty() const;

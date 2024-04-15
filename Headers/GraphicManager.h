@@ -22,6 +22,7 @@ public:
     void drawMiniMap(Dungeon *);
     void drawOptions();
     void showStatus(const Player *);
+    void showInventory(const Player *);
     int inOptions();
     WINDOW *getDialogues();
     virtual void clearScene() = 0;

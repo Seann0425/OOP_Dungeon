@@ -98,4 +98,7 @@ void Dungeon::generateObject() {
     // a NPC that will give you the key to the boss room
     Tester *keyHolder = new Tester("Tester");
     key_room->addObject(keyHolder, 7, 15);
+    // a NPC that help the developer finish his homework before deadline
+    Helper *helper = new Helper("Helper");
+    init_room->addObject(helper, 13, 1);
 }

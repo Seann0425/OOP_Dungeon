@@ -59,7 +59,7 @@ void Scene::drawOptions() {
 }
 
 void Scene::showStatus(const Player *player) {
-    // currently show only HP, ATK, DEF
+    // currently show only HP, ATK, DEF, hunger, thirsty
     int y, x;
     wclear(dialogues);
     box(dialogues, 0, 0);
@@ -72,7 +72,23 @@ void Scene::showStatus(const Player *player) {
     newLine(dialogues, y, x);
     wprintw(dialogues, "Defense: %d", player->getDefense());
     newLine(dialogues, y, x);
+    wprintw(dialogues, "Hunger: %d", player->getHunger());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Thirsty: %d", player->getThirsty());
+    newLine(dialogues, y, x);
     wprintw(dialogues, "Key: %d", player->checkKey());
+    wrefresh(dialogues);
+}
+
+void Scene::showInventory(const Player *player) {
+    int y, x;
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    for (const auto &[consumable, amount] : player->getSack()) {
+        wprintw(dialogues, "%s: %d", consumable->getName().c_str(), amount);
+        newLine(dialogues, y, x);
+    }
     wrefresh(dialogues);
 }
 
@@ -117,7 +133,7 @@ WINDOW *Scene::getDialogues() {
 
 // ====================exploring====================
 ExploringScene::ExploringScene() : Scene() {
-    optionButtons = {"Exit", "Status"};
+    optionButtons = {"Exit", "Inventory", "Status"};
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
     room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
