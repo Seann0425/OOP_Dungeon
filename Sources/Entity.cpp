@@ -154,6 +154,15 @@ const std::vector<std::pair<Consumable *, int>> &Player::getSack() const {
     return this->sack;
 }
 
+void Player::addEquipment(Equipment *equipment) {
+    // TODO: exceed limit
+    // check exist
+    for (const auto &EQ : inventory) {
+        if (EQ->getName() == equipment->getName()) return;
+    }
+    inventory.push_back(equipment);
+}
+
 Tester::Tester() = default;
 
 Tester::Tester(const std::string &name) : NPC(name) {
@@ -182,4 +191,7 @@ void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     player->addConsumable(2, Helper::cookie);
     player->addConsumable(3, Helper::bottle_of_water);
     player->addConsumable(4, Helper::milk);
+    Equipment *sword = new Equipment("OOP Sword", 0, 90, 999, 999);
+    sword->setDescription("Overly OverPowered Sword.");
+    player->addEquipment(sword);
 }

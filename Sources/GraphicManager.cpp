@@ -88,6 +88,25 @@ void Scene::showInventory(const Player *player) {
     for (const auto &[consumable, amount] : player->getSack()) {
         wprintw(dialogues, "%s: %d", consumable->getName().c_str(), amount);
         newLine(dialogues, y, x);
+        wprintw(dialogues, "%s", consumable->getDescription().c_str());
+        newLine(dialogues, y, x);
+    }
+    wprintw(dialogues, "Press Enter to check equipments.");
+    while ((x = wgetch(dialogues))) {
+        if (x == 10) break;
+    }
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    if (player->getInventory().empty()) {
+        wprintw(dialogues, "No equipment in the inventory.");
+    } else {
+        for (const auto &equipment : player->getInventory()) {
+            wprintw(dialogues, "%s x1", equipment->getName().c_str());
+            newLine(dialogues, y, x);
+            wprintw(dialogues, "%s", equipment->getDescription().c_str());
+            newLine(dialogues, y, x);
+        }
     }
     wrefresh(dialogues);
 }

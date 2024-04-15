@@ -2,16 +2,19 @@
 
 // definition of Item
 Item::Item() = default;
-Item::Item(std::string &name, const std::string tag, int price) : Object(name, tag) {
+Item::Item(std::string name, const std::string tag, int price) : Object(name, tag) {
     this->price = price;
 }
 void Item::setDescription(std::string _d) {
     this->description = _d;
 }
+const std::string Item::getDescription() const {
+    return this->description;
+}
 // definition of equipment
 Equipment::Equipment() : Item(), health(0), attack(0), defense(0) {
 }
-Equipment::Equipment(std::string &name, int price, int health, int attack, int defense)
+Equipment::Equipment(std::string name, int price, int health, int attack, int defense)
     : Item(name, "Equipment", price), health(health), attack(attack), defense(defense) {
 }
 const int Equipment::getHealth() const {

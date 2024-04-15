@@ -8,8 +8,9 @@
 class Item : public Object {
 public:
     Item();
-    Item(std::string &, const std::string, int);
+    Item(std::string, const std::string, int);
     void setDescription(std::string _d);
+    const std::string getDescription() const;
 protected:
     int price;
     std::string description;
@@ -18,7 +19,7 @@ protected:
 class Equipment : public Item {
 public:
     Equipment();
-    Equipment(std::string &, int, int, int, int);
+    Equipment(std::string, int, int, int, int);
     const int getHealth() const;
     const int getAttack() const;
     const int getDefense() const;
