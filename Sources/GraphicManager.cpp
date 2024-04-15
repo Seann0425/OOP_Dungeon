@@ -92,6 +92,7 @@ void Scene::showInventory(const Player *player) {
         newLine(dialogues, y, x);
     }
     wprintw(dialogues, "Press Enter to check equipments.");
+    // BUG: not Enter also works
     while ((x = wgetch(dialogues))) {
         if (x == 10) break;
     }
