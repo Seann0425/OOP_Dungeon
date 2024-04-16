@@ -93,6 +93,7 @@ void Scene::showInventory(const Player *player) {
     }
     wprintw(dialogues, "Press Enter to check equipments.");
     // BUG: not Enter also works
+    keypad(dialogues, true);
     while ((x = wgetch(dialogues))) {
         if (x == 10) break;
     }
@@ -205,6 +206,39 @@ void ExploringScene::clearScene() {
 }
 
 // ====================fighting====================
+FightingScene::FightingScene() : Scene() {
+    optionButtons = {"Exit", "Buttons1", "Button2"};
+    int y_max, x_max;
+    getmaxyx(stdscr, y_max, x_max);
+    battle = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
+    refresh();
+}
+
+void FightingScene::clearScene() {
+    wclear(this->battle);
+    wclear(this->buttons);
+    wclear(this->dialogues);
+    wclear(this->mini_map);
+    wrefresh(this->battle);
+    wrefresh(this->buttons);
+    wrefresh(this->dialogues);
+    wrefresh(this->mini_map);
+}
+void FightingScene::drawMonster(Monster *monster) {
+    int y, x;
+    wclear(battle);
+    box(battle, 0, 0);
+    wattron(battle, COLOR_PAIR(RED_PAIR));
+    mvwprintw(battle, 0, 0, monster->getName().c_str());
+    wattroff(battle, COLOR_PAIR(RED_PAIR));
+    // TODO: print moster image
+    wattron(battle, COLOR_PAIR(RED_PAIR));
+    mvwprintw(battle, 1, 1, "An error occured while ");
+    newLine(battle, y, x);
+    wprintw(battle, "loading the Monster's image.");
+    wattroff(battle, COLOR_PAIR(RED_PAIR));
+    wrefresh(battle);
+}
 
 // ====================trading====================
 TradingScene::TradingScene() : Scene() {
@@ -234,7 +268,7 @@ void TradingScene::drawVendor(const NPC *npc) {
     wattron(vendor, COLOR_PAIR(GREEN_PAIR));
     mvwprintw(vendor, 0, 0, npc->getName().c_str());
     wattroff(vendor, COLOR_PAIR(GREEN_PAIR));
-    // print npc image
+    // TODO: print npc image
     wattron(vendor, COLOR_PAIR(RED_PAIR));
     mvwprintw(vendor, 1, 1, "An error occured while ");
     newLine(vendor, y, x);

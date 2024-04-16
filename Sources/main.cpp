@@ -47,6 +47,7 @@ int main() {
     exploring.drawOptions();
 
     // fighting window
+    FightingScene fighting;
 
     // trading window
     TradingScene trading;
@@ -96,8 +97,6 @@ int main() {
             }
         }
 
-        // trigger fighting
-
         // trigger trading
         if (gameStatus[2]) {
             NPC *npc = static_cast<NPC *>(target);
@@ -130,7 +129,27 @@ int main() {
             }
             trading.clearScene();
         }
-
+        // trigger fighting
+        if (gameStatus[1]) {
+            Monster *monster = static_cast<Monster *>(target);
+            exploring.clearScene();
+            fighting.drawMonster(monster);
+            fighting.drawOptions();
+            fighting.drawDialogues();
+            fighting.drawMiniMap(dungeon);
+            while (gameStatus[1]) {
+                switch ((input = getch())) {
+                case 27: // ESC
+                    option = fighting.inOptions();
+                    if (option == 0) return 0;
+                    else break;
+                default:
+                    break;
+                }
+                fighting.drawOptions();
+            }
+            fighting.clearScene();
+        }
         exploring.drawMiniMap(dungeon);
         exploring.drawRoom(player);
         exploring.drawOptions();

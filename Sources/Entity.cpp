@@ -25,6 +25,8 @@ void NPC::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
 Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX) {
     this->tag = "Player";
     hasKey = false;
+    hunger = Player::HUNGER_MAX;
+    thirsty = Player::THIRSTY_MAX;
     this->sack[0] = std::make_pair(new Consumable("Bread", 0, 0, 1, 0, 0, false), 0);
     sack[0].first->setDescription("Restore 1 hunger.");
     this->sack[1] = std::make_pair(new Consumable("Steak", 0, 0, 3, 0, 0, false), 0);
@@ -40,6 +42,8 @@ Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX) {
 Player::Player(const std::string &name, int mxHP, int curHP, int atk, int def)
     : GameCharacter(name, "Player", mxHP, curHP, atk, def), sack(Player::CONSUMABLE_MAX) {
     hasKey = false;
+    hunger = Player::HUNGER_MAX;
+    thirsty = Player::THIRSTY_MAX;
     this->sack[0] = std::make_pair(new Consumable("Bread", 0, 0, 1, 0, 0, false), 0);
     sack[0].first->setDescription("Restore 1 hunger.");
     this->sack[1] = std::make_pair(new Consumable("Steak", 0, 0, 3, 0, 0, false), 0);

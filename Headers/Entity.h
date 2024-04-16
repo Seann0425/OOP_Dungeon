@@ -40,8 +40,10 @@ public:
     static const int &INIT_HEALTH;
     static const int &INIT_ATTACK;
     static const int &INIT_DEFENSE;
-    const size_t EQUIPMENT_MAX = 10;
-    const size_t CONSUMABLE_MAX = 5;
+    static const size_t EQUIPMENT_MAX = 10;
+    static const size_t CONSUMABLE_MAX = 5;
+    static const int HUNGER_MAX = 10;
+    static const int THIRSTY_MAX = 20;
     Player();
     Player(const std::string &, int, int, int, int);
     static void health_init(int);

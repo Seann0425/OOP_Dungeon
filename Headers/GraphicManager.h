@@ -50,6 +50,8 @@ private:
 class FightingScene : public Scene {
 public:
     FightingScene();
+    void clearScene();
+    void drawMonster(Monster *);
 private:
     WINDOW *battle;
 };
