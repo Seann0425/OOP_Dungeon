@@ -27,6 +27,18 @@ void Room::addObject(Object *object, int y, int x) {
     locations.emplace_back(y, x);
 }
 
+void Room::removeObject(Object *object) {
+    int i = 0;
+    for (auto itr = objects.begin(); itr != objects.end(); itr++, i++) {
+        if (*itr == object) {
+            objects.erase(itr);
+            break;
+        }
+    }
+    locations.erase(locations.begin() + i);
+    delete object;
+}
+
 const std::vector<Object *> &Room::getObjects() const {
     return this->objects;
 }

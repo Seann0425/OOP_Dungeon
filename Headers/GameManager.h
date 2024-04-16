@@ -10,4 +10,5 @@
 
 bool runMenu(Dungeon *dungeon);
 Object *checkEvent(Player *);
+void deleteObject(Object *, Player *);
 #endif

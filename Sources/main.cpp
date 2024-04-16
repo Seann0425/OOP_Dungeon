@@ -121,6 +121,7 @@ int main() {
                     wrefresh(trading.getDialogues());
                     npc->activated(trading.getShop(), trading.getDialogues(), player);
                     std::swap(gameStatus[0], gameStatus[2]);
+
                     break;
                 default:
                     break;
@@ -128,6 +129,7 @@ int main() {
                 trading.drawOptions();
             }
             trading.clearScene();
+            if (npc->checkDead()) deleteObject(npc, player);
         }
         // trigger fighting
         if (gameStatus[1]) {

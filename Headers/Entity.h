@@ -57,7 +57,7 @@ public:
     void changeCoordinate(int, int);
     const int getCoordinateY() const;
     const int getCoordinateX() const;
-    const Room *getRoom() const;
+    Room *getRoom() const;
     int playerMove(int, WINDOW *);
     bool checkKey() const;
     void setKey(bool);

@@ -89,7 +89,7 @@ const int Player::getCoordinateX() const {
     return this->coordinate.second;
 }
 
-const Room *Player::getRoom() const {
+Room *Player::getRoom() const {
     return this->currentRoom;
 }
 
@@ -178,6 +178,7 @@ void Tester::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 2, 1, "But you got a key from Tester somehow.");
     mvwprintw(dialogues, 3, 1, "Press any key to continue.");
     wgetch(dialogues);
+    this->currentHealth = 0;
 }
 
 Helper::Helper() = default;

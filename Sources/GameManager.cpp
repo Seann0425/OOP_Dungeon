@@ -38,3 +38,7 @@ Object *checkEvent(Player *player) {
     }
     return nullptr;
 }
+
+void deleteObject(Object *object, Player *player) {
+    player->getRoom()->removeObject(object);
+}
