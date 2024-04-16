@@ -16,7 +16,7 @@ class Player;
 class Monster : public GameCharacter {
 public:
     Monster();
-    Monster(const std::string &, int, int, int, int);
+    Monster(const std::string, int, int, int, int);
 private:
 };
 

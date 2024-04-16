@@ -4,7 +4,7 @@ Monster::Monster() {
     this->tag = "Monster";
 }
 
-Monster::Monster(const std::string &name, int mxHp, int curHp, int atk, int def) : GameCharacter(name, "Monster", mxHp, curHp, atk, def) {
+Monster::Monster(const std::string name, int mxHp, int curHp, int atk, int def) : GameCharacter(name, "Monster", mxHp, curHp, atk, def) {
 }
 
 NPC::NPC() {

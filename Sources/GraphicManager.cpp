@@ -171,7 +171,7 @@ void ExploringScene::drawRoom(const Player *player) {
     if (hasExit[2]) mvwaddch(this->room, Room::exit_Y, 0, ' ');
     if (hasExit[3]) mvwaddch(this->room, Room::exit_Y, Room::room_width - 1, ' ');
 
-    // TODO: display object
+    // display objects
     const std::vector<Object *> &objects = player->getRoom()->getObjects();
     const std::vector<std::pair<int, int>> &locations = player->getRoom()->getLocs();
     const auto N = objects.size();
@@ -180,6 +180,10 @@ void ExploringScene::drawRoom(const Player *player) {
             wattron(this->room, COLOR_PAIR(GREEN_PAIR));
             mvwaddch(this->room, locations[i].first, locations[i].second, 'N');
             wattroff(this->room, COLOR_PAIR(GREEN_PAIR));
+        } else if (objects[i]->getTag() == "Monster") {
+            wattron(this->room, COLOR_PAIR(RED_PAIR));
+            mvwaddch(this->room, locations[i].first, locations[i].second, 'M');
+            wattroff(this->room, COLOR_PAIR(RED_PAIR));
         }
     }
     wrefresh(this->room);

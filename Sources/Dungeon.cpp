@@ -101,4 +101,7 @@ void Dungeon::generateObject() {
     // a NPC that help the developer finish his homework before deadline
     Helper *helper = new Helper("Helper");
     init_room->addObject(helper, 13, 1);
+    // boss, probably the only monster in the game
+    Monster *boss = new Monster("Deadline", 50, 50, 5, 5);
+    boss_room->addObject(boss, 7, 15);
 }
