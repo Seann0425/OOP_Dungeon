@@ -22,6 +22,7 @@ Scene::Scene() {
     refresh();
     box(dialogues, 0, 0);
     wrefresh(dialogues);
+    keypad(dialogues, true);
 }
 
 // TODO: update mini_map status, which includes current player room and regular rooms
@@ -267,6 +268,7 @@ void FightingScene::updateSituation(Player *player, Monster *monster, int player
     wprintw(dialogues, "%s dealed %d points of damage!", monster->getName().c_str(), playerDmg);
     newLine(dialogues, y, x);
     wprintw(dialogues, "You are now %d/%d", player->getCurrentHealth(), player->getMaxHealth());
+    newLine(dialogues, y, x);
     wrefresh(dialogues);
 }
 

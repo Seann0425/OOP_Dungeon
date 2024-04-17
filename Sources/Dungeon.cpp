@@ -102,6 +102,6 @@ void Dungeon::generateObject() {
     Helper *helper = new Helper("Helper");
     init_room->addObject(helper, 13, 1);
     // boss, probably the only monster in the game
-    Monster *boss = new Monster("Deadline", 50, 50, 5, 5);
+    Boss *boss = new Boss("Deadline", 50, 50, 5, 5);
     boss_room->addObject(boss, 7, 15);
 }

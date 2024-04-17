@@ -4,14 +4,29 @@ Monster::Monster() {
     this->tag = "Monster";
 }
 
+Monster::Monster(const std::string name) {
+    this->tag = "Monster";
+    this->name = name;
+}
+
 Monster::Monster(const std::string name, int mxHp, int curHp, int atk, int def) : GameCharacter(name, "Monster", mxHp, curHp, atk, def) {
+}
+
+void Monster::deathAction(WINDOW *dialogues, std::array<bool, 3> &gameStatus) {
+    int y, x;
+    wprintw(dialogues, "You won the battle!");
+    getyx(dialogues, y, x);
+    wmove(dialogues, y + 1, 1);
+    wprintw(dialogues, "Press any key to continue.");
+    wgetch(dialogues);
+    std::swap(gameStatus[0], gameStatus[1]);
 }
 
 NPC::NPC() {
     this->tag = "NPC";
 }
 
-NPC::NPC(const std::string &name) {
+NPC::NPC(const std::string name) {
     this->tag = "NPC";
     this->name = name;
 }
@@ -173,7 +188,7 @@ void Player::addEquipment(Equipment *equipment) {
 
 Tester::Tester() = default;
 
-Tester::Tester(const std::string &name) : NPC(name) {
+Tester::Tester(const std::string name) : NPC(name) {
 }
 
 void Tester::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
@@ -186,7 +201,7 @@ void Tester::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
 }
 
 Helper::Helper() = default;
-Helper::Helper(const std::string &name) : NPC(name) {
+Helper::Helper(const std::string name) : NPC(name) {
 }
 void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 1, 1, "The Developer has no time to build this dungeon.");
@@ -203,4 +218,19 @@ void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     Equipment *sword = new Equipment("OOP Sword", 0, 90, 999, 999);
     sword->setDescription("Overly OverPowered Sword.");
     player->addEquipment(sword);
+}
+
+Boss::Boss() = default;
+Boss::Boss(const std::string name) : Monster(name) {
+}
+Boss::Boss(const std::string name, int mxHp, int curHp, int atk, int def) : Monster(name, mxHp, curHp, atk, def) {
+}
+void Boss::deathAction(WINDOW *dialogues, std::array<bool, 3> &gameStatus) {
+    int y, x;
+    wprintw(dialogues, "You won the battle!");
+    getyx(dialogues, y, x);
+    wmove(dialogues, y + 1, 1);
+    wprintw(dialogues, "Press any key to continue.");
+    wgetch(dialogues);
+    gameStatus[1] = false;
 }

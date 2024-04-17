@@ -4,7 +4,7 @@ GameCharacter::GameCharacter() {
     maxHealth = 1;
     currentHealth = 1;
 }
-GameCharacter::GameCharacter(const std::string &n, const std::string tag, int mxHP, int curHP, int atk, int def) : Object(n, tag) {
+GameCharacter::GameCharacter(const std::string n, const std::string tag, int mxHP, int curHP, int atk, int def) : Object(n, tag) {
     this->maxHealth = mxHP;
     this->currentHealth = curHP;
     this->attack = atk;

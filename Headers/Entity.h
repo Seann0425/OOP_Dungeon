@@ -16,14 +16,16 @@ class Player;
 class Monster : public GameCharacter {
 public:
     Monster();
+    Monster(const std::string);
     Monster(const std::string, int, int, int, int);
-private:
+    virtual void deathAction(WINDOW *, std::array<bool, 3> &);
+protected:
 };
 
 class NPC : public GameCharacter {
 public:
     NPC();
-    NPC(const std::string &);
+    NPC(const std::string);
     void listCommodity();
     // take commodity id as parameter and return successful or not
     bool sellItem(int);
@@ -82,7 +84,7 @@ private:
 class Tester : public NPC {
 public:
     Tester();
-    Tester(const std::string &);
+    Tester(const std::string);
     void activated(WINDOW *, WINDOW *, Player *);
 };
 
@@ -94,7 +96,15 @@ public:
     static const int bottle_of_water = 10;
     static const int milk = 1;
     Helper();
-    Helper(const std::string &);
+    Helper(const std::string);
     void activated(WINDOW *, WINDOW *, Player *);
+};
+
+class Boss : public Monster {
+public:
+    Boss();
+    Boss(const std::string);
+    Boss(const std::string, int, int, int, int);
+    void deathAction(WINDOW *, std::array<bool, 3> &);
 };
 #endif

@@ -130,7 +130,7 @@ int main() {
             }
             trading.clearScene();
             // BUG: Run Time Error
-            // if (npc->checkDead()) deleteObject(npc, player);
+            if (npc->checkDead()) deleteObject(npc, player);
         }
         // trigger fighting
         if (gameStatus[1]) {
@@ -164,6 +164,9 @@ int main() {
                     break;
                 }
                 fighting.drawOptions();
+                if (monster->checkDead()) {
+                    monster->deathAction(fighting.getDialogues(), gameStatus);
+                }
             }
             fighting.clearScene();
         }
