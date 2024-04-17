@@ -61,6 +61,7 @@ int main() {
     */
     std::array<bool, 3> gameStatus{true, false, false}; // explore, fight, trade
     int input, option; // store keyboard input, some choice made by player
+    int playerDmg, monsterDmg; // store battle situation
     Object *target = nullptr;
     keypad(stdscr, true);
     while (gameStatus[0]) {
@@ -149,6 +150,14 @@ int main() {
                         break;
                     } else if (option == 2) {
                         fighting.showStatus(player);
+                        break;
+                    } else if (option == 3) {
+                        // poorly implemented
+                        playerDmg = (monster->getAttack() - player->getDefense() < 0) ? 0 : monster->getAttack() - player->getDefense();
+                        monsterDmg = (player->getAttack() - monster->getDefense() < 0) ? 0 : player->getAttack() - monster->getDefense();
+                        monster->takeDamage(monsterDmg);
+                        player->takeDamage(playerDmg);
+                        fighting.updateSituation(player, monster, playerDmg, monsterDmg);
                         break;
                     } else break;
                 default:

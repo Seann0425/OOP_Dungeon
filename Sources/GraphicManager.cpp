@@ -254,6 +254,22 @@ void FightingScene::drawDialogues(Monster *monster) {
     wrefresh(dialogues);
 }
 
+void FightingScene::updateSituation(Player *player, Monster *monster, int playerDmg, int monsterDmg) {
+    // player, monster, the dmg player took, the dmg monster took
+    int y, x;
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    wprintw(dialogues, "You dealed %d points of damage!", monsterDmg);
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "%s is now %d/%d", monster->getName().c_str(), monster->getCurrentHealth(), monster->getMaxHealth());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "%s dealed %d points of damage!", monster->getName().c_str(), playerDmg);
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "You are now %d/%d", player->getCurrentHealth(), player->getMaxHealth());
+    wrefresh(dialogues);
+}
+
 // ====================trading====================
 TradingScene::TradingScene() : Scene() {
     optionButtons = {"Exit", "Button1", "Button2"};

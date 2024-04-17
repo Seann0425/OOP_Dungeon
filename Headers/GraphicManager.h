@@ -53,6 +53,7 @@ public:
     void clearScene();
     void drawMonster(Monster *);
     void drawDialogues(Monster *);
+    void updateSituation(Player *, Monster *, int, int);
 private:
     WINDOW *battle;
 };
