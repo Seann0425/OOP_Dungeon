@@ -20,9 +20,9 @@ class Equipment : public Item {
 public:
     Equipment();
     Equipment(std::string, int, int, int, int);
-    const int getHealth() const;
-    const int getAttack() const;
-    const int getDefense() const;
+    int getHealth() const;
+    int getAttack() const;
+    int getDefense() const;
 private:
     int health;
     int attack;

@@ -121,7 +121,6 @@ int main() {
                     wrefresh(trading.getDialogues());
                     npc->activated(trading.getShop(), trading.getDialogues(), player);
                     std::swap(gameStatus[0], gameStatus[2]);
-
                     break;
                 default:
                     break;
@@ -129,7 +128,8 @@ int main() {
                 trading.drawOptions();
             }
             trading.clearScene();
-            if (npc->checkDead()) deleteObject(npc, player);
+            // BUG: Run Time Error
+            // if (npc->checkDead()) deleteObject(npc, player);
         }
         // trigger fighting
         if (gameStatus[1]) {
@@ -137,14 +137,20 @@ int main() {
             exploring.clearScene();
             fighting.drawMonster(monster);
             fighting.drawOptions();
-            fighting.drawDialogues();
+            fighting.drawDialogues(monster);
             fighting.drawMiniMap(dungeon);
             while (gameStatus[1]) {
                 switch ((input = getch())) {
                 case 27: // ESC
                     option = fighting.inOptions();
                     if (option == 0) return 0;
-                    else break;
+                    else if (option == 1) {
+                        std::swap(gameStatus[0], gameStatus[1]);
+                        break;
+                    } else if (option == 2) {
+                        fighting.showStatus(player);
+                        break;
+                    } else break;
                 default:
                     break;
                 }

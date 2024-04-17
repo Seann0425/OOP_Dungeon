@@ -17,13 +17,13 @@ Equipment::Equipment() : Item(), health(0), attack(0), defense(0) {
 Equipment::Equipment(std::string name, int price, int health, int attack, int defense)
     : Item(name, "Equipment", price), health(health), attack(attack), defense(defense) {
 }
-const int Equipment::getHealth() const {
+int Equipment::getHealth() const {
     return this->health;
 }
-const int Equipment::getAttack() const {
+int Equipment::getAttack() const {
     return this->attack;
 }
-const int Equipment::getDefense() const {
+int Equipment::getDefense() const {
     return this->defense;
 }
 

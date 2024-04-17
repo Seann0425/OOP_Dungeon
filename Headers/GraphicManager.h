@@ -52,6 +52,7 @@ public:
     FightingScene();
     void clearScene();
     void drawMonster(Monster *);
+    void drawDialogues(Monster *);
 private:
     WINDOW *battle;
 };

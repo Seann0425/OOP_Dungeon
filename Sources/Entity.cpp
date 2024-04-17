@@ -165,6 +165,10 @@ void Player::addEquipment(Equipment *equipment) {
         if (EQ->getName() == equipment->getName()) return;
     }
     inventory.push_back(equipment);
+    this->maxHealth += equipment->getHealth();
+    this->currentHealth += equipment->getHealth();
+    this->attack += equipment->getAttack();
+    this->defense += equipment->getDefense();
 }
 
 Tester::Tester() = default;

@@ -66,7 +66,7 @@ void Scene::showStatus(const Player *player) {
     wmove(dialogues, 1, 1);
     wprintw(dialogues, "Player Name: %s", player->getName().c_str());
     newLine(dialogues, y, x);
-    wprintw(dialogues, "Health: %d / %d", player->getCurrentHealth(), player->getMaxHealth());
+    wprintw(dialogues, "Health: %d/%d", player->getCurrentHealth(), player->getMaxHealth());
     newLine(dialogues, y, x);
     wprintw(dialogues, "Attack: %d", player->getAttack());
     newLine(dialogues, y, x);
@@ -207,7 +207,7 @@ void ExploringScene::clearScene() {
 
 // ====================fighting====================
 FightingScene::FightingScene() : Scene() {
-    optionButtons = {"Exit", "Buttons1", "Button2"};
+    optionButtons = {"Exit", "Retreat", "Status", "Attack"};
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
     battle = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
@@ -238,6 +238,20 @@ void FightingScene::drawMonster(Monster *monster) {
     wprintw(battle, "loading the Monster's image.");
     wattroff(battle, COLOR_PAIR(RED_PAIR));
     wrefresh(battle);
+}
+
+void FightingScene::drawDialogues(Monster *monster) {
+    int y, x;
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    wprintw(dialogues, "You met %s!", monster->getName().c_str());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Health: %d/%d", monster->getCurrentHealth(), monster->getMaxHealth());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Attack: %d", monster->getAttack());
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Defense: %d", monster->getDefense());
+    wrefresh(dialogues);
 }
 
 // ====================trading====================
