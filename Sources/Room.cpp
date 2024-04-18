@@ -46,3 +46,7 @@ const std::vector<Object *> &Room::getObjects() const {
 const std::vector<std::pair<int, int>> &Room::getLocs() const {
     return this->locations;
 }
+
+Ecosystem Room::getEco() const {
+    return this->eco;
+}

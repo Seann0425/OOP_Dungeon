@@ -2,7 +2,7 @@
 #define ENTITY
 
 #include <ncurses/ncurses.h>
-
+#include <random>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -67,6 +67,8 @@ public:
     int getThirsty() const;
     const std::vector<Equipment *> &getInventory() const;
     const std::vector<std::pair<Consumable *, int>> &getSack() const;
+    void hungering(); // not implemented
+    void thirsting(); // not implemented
 private:
     static int health_initializer;
     static int attack_initializer;

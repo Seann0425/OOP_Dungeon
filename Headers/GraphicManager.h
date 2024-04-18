@@ -17,6 +17,7 @@
 #define GREEN_PAIR 6
 #define YELLOW_PAIR 7
 #define PINK_PAIR 8
+#define BLUE_PAIR 9
 
 // base class for different scene
 class Scene {
@@ -26,6 +27,7 @@ public:
     void drawOptions();
     void showStatus(const Player *);
     void showInventory(const Player *);
+    void showSack(const Player *);
     int inOptions();
     WINDOW *getDialogues();
     virtual void clearScene() = 0;

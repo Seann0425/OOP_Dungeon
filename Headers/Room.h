@@ -23,6 +23,7 @@ public:
     void removeObject(Object *);
     const std::vector<Object *> &getObjects() const;
     const std::vector<std::pair<int, int>> &getLocs() const;
+    Ecosystem getEco() const;
 private:
     std::vector<Object *> objects;
     std::vector<std::pair<int, int>> locations;

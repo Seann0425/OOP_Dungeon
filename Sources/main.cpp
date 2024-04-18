@@ -78,9 +78,12 @@ int main() {
             option = exploring.inOptions();
             if (option == 0) return 0;
             else if (option == 1) {
-                exploring.showInventory(player);
+                exploring.showSack(player);
                 break;
             } else if (option == 2) {
+                exploring.showInventory(player);
+                break;
+            } else if (option == 3) {
                 exploring.showStatus(player);
                 break;
             } else break;

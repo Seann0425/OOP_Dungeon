@@ -86,30 +86,30 @@ void Scene::showInventory(const Player *player) {
     wclear(dialogues);
     box(dialogues, 0, 0);
     wmove(dialogues, 1, 1);
+    if (player->getInventory().empty()) {
+        wprintw(dialogues, "No equipment in the inventory.");
+    } else {
+        for (const auto &equipment : player->getInventory()) {
+            wprintw(dialogues, "%s x1 ", equipment->getName().c_str());
+            wprintw(dialogues, "HP: %d ATK: %d DEF: %d", equipment->getHealth(), equipment->getAttack(), equipment->getDefense());
+            newLine(dialogues, y, x);
+            wprintw(dialogues, "%s", equipment->getDescription().c_str());
+            newLine(dialogues, y, x);
+        }
+    }
+    wrefresh(dialogues);
+}
+
+void Scene::showSack(const Player *player) {
+    int y, x;
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
     for (const auto &[consumable, amount] : player->getSack()) {
         wprintw(dialogues, "%s: %d", consumable->getName().c_str(), amount);
         newLine(dialogues, y, x);
         wprintw(dialogues, "%s", consumable->getDescription().c_str());
         newLine(dialogues, y, x);
-    }
-    wprintw(dialogues, "Press Enter to check equipments.");
-    // BUG: not Enter also works
-    keypad(dialogues, true);
-    while ((x = wgetch(dialogues))) {
-        if (x == 10) break;
-    }
-    wclear(dialogues);
-    box(dialogues, 0, 0);
-    wmove(dialogues, 1, 1);
-    if (player->getInventory().empty()) {
-        wprintw(dialogues, "No equipment in the inventory.");
-    } else {
-        for (const auto &equipment : player->getInventory()) {
-            wprintw(dialogues, "%s x1", equipment->getName().c_str());
-            newLine(dialogues, y, x);
-            wprintw(dialogues, "%s", equipment->getDescription().c_str());
-            newLine(dialogues, y, x);
-        }
     }
     wrefresh(dialogues);
 }
@@ -155,7 +155,7 @@ WINDOW *Scene::getDialogues() {
 
 // ====================exploring====================
 ExploringScene::ExploringScene() : Scene() {
-    optionButtons = {"Exit", "Inventory", "Status"};
+    optionButtons = {"Exit", "Sack", "Inventory", "Status"};
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
     room = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
@@ -164,8 +164,22 @@ ExploringScene::ExploringScene() : Scene() {
 
 // y: 1~13, x:1~28
 void ExploringScene::drawRoom(const Player *player) {
+    short eco;
+    switch (player->getRoom()->getEco()) {
+    case Desert:
+        eco = YELLOW_PAIR;
+        break;
+    case Forest:
+        eco = GREEN_PAIR;
+        break;
+    default: // Swamp
+        eco = BLUE_PAIR;
+        break;
+    }
     wclear(this->room);
+    wattron(this->room, COLOR_PAIR(eco));
     box(this->room, 0, 0);
+    wattroff(this->room, COLOR_PAIR(eco));
     mvwaddch(this->room, player->getCoordinateY(), player->getCoordinateX(), ACS_BLOCK);
     std::array<bool, 4> hasExit = player->getRoom()->getExit();
     if (hasExit[0]) mvwaddch(this->room, 0, Room::exit_X, ' ');
@@ -379,6 +393,7 @@ void initGraphic() {
     init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED); // test
     init_pair(GREEN_PAIR, COLOR_GREEN, COLOR_BLACK);
     init_pair(YELLOW_PAIR, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(BLUE_PAIR, COLOR_BLUE, COLOR_BLACK);
 }
 
 const int displayMenu() {
