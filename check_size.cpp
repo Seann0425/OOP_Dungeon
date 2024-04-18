@@ -26,7 +26,7 @@ int main() {
 
     const auto *const print_row = "Current Rows: ";
     const auto *const print_col = ", Current Columns: ";
-    const auto print_len = static_cast<int>(std::strlen(print_row) + std::strlen(print_row) + 4);
+    const auto print_len = static_cast<int>(std::strlen(print_row) + std::strlen(print_col) + 4);
 
     const auto *const exit = "(Press Q when done)";
     const auto exit_len = static_cast<int>(std::strlen(exit));
