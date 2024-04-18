@@ -104,4 +104,7 @@ void Dungeon::generateObject() {
     // boss, probably the only monster in the game
     Boss *boss = new Boss("Deadline", 50, 50, 5, 5);
     boss_room->addObject(boss, 7, 15);
+    // cute kitten
+    Cat *kitten = new Cat("Kitten");
+    rooms[1][1]->addObject(kitten, 7, 15);
 }

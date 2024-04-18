@@ -301,6 +301,18 @@ void TradingScene::drawVendor(const NPC *npc) {
     mvwprintw(vendor, 0, 0, npc->getName().c_str());
     wattroff(vendor, COLOR_PAIR(GREEN_PAIR));
     // TODO: print npc image
+    if (npc->getName() == "Kitten") {
+        wmove(vendor, 6, 11);
+        wprintw(vendor, "  ^~^  ,");
+        wmove(vendor, 7, 11);
+        wprintw(vendor, " ('Y') )");
+        wmove(vendor, 8, 11);
+        wprintw(vendor, " /   \\/");
+        wmove(vendor, 9, 11);
+        wprintw(vendor, "(\\|||/)");
+        wrefresh(vendor);
+        return;
+    }
     wattron(vendor, COLOR_PAIR(RED_PAIR));
     mvwprintw(vendor, 1, 1, "An error occured while ");
     newLine(vendor, y, x);

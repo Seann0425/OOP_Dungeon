@@ -220,6 +220,17 @@ void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     player->addEquipment(sword);
 }
 
+Cat::Cat() = default;
+
+Cat::Cat(const std::string name) : NPC(name) {
+}
+void Cat::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
+    mvwprintw(dialogues, 1, 1, "This sweet cutie just gave you a cookie.");
+    mvwprintw(dialogues, 2, 1, "Aww");
+    wgetch(dialogues);
+    player->addConsumable(2, 1);
+}
+
 Boss::Boss() = default;
 Boss::Boss(const std::string name) : Monster(name) {
 }

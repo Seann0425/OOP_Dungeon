@@ -6,8 +6,8 @@
 
 #include "Dungeon.h"
 
-#define COLOR_TAKO 8
-#define COLOR_PINK 9
+#define COLOR_TAKO 10
+#define COLOR_PINK 11
 
 #define TAKO_BACKGROUND 1
 #define REVERSE_PAIR 2

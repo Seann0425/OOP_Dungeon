@@ -100,6 +100,13 @@ public:
     void activated(WINDOW *, WINDOW *, Player *);
 };
 
+class Cat : public NPC {
+public:
+    Cat();
+    Cat(const std::string);
+    void activated(WINDOW *, WINDOW *, Player *);
+};
+
 class Boss : public Monster {
 public:
     Boss();
