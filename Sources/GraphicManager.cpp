@@ -301,6 +301,7 @@ void TradingScene::drawVendor(const NPC *npc) {
     mvwprintw(vendor, 0, 0, npc->getName().c_str());
     wattroff(vendor, COLOR_PAIR(GREEN_PAIR));
     // TODO: print npc image
+    // this is currently very poorly implemented
     if (npc->getName() == "Kitten") {
         wmove(vendor, 6, 11);
         wprintw(vendor, "  ^~^  ,");
@@ -310,6 +311,13 @@ void TradingScene::drawVendor(const NPC *npc) {
         wprintw(vendor, " /   \\/");
         wmove(vendor, 9, 11);
         wprintw(vendor, "(\\|||/)");
+        wrefresh(vendor);
+        return;
+    } else if (npc->getName() == "Tako") {
+        wmove(vendor, 7, 12);
+        wprintw(vendor, " (..)");
+        wmove(vendor, 8, 12);
+        wprintw(vendor, "((()))");
         wrefresh(vendor);
         return;
     }

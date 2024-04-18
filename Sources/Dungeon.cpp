@@ -107,4 +107,7 @@ void Dungeon::generateObject() {
     // cute kitten
     Cat *kitten = new Cat("Kitten");
     rooms[1][1]->addObject(kitten, 7, 15);
+    // developer himself
+    Tako *tako = new Tako("Tako");
+    rooms[2][2]->addObject(tako, 13, 28);
 }

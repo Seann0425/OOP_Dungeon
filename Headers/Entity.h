@@ -107,6 +107,13 @@ public:
     void activated(WINDOW *, WINDOW *, Player *);
 };
 
+class Tako : public NPC {
+public:
+    Tako();
+    Tako(const std::string);
+    void activated(WINDOW *, WINDOW *, Player *);
+};
+
 class Boss : public Monster {
 public:
     Boss();

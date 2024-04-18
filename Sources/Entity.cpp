@@ -231,6 +231,18 @@ void Cat::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     player->addConsumable(2, 1);
 }
 
+Tako::Tako() = default;
+
+Tako::Tako(const std::string name) : NPC(name) {
+}
+void Tako::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
+    mvwprintw(dialogues, 1, 1, "You found an octopus building the dungeon!!");
+    wgetch(dialogues);
+    mvwprintw(dialogues, 2, 1, "He poisoned you and ran away...");
+    wgetch(dialogues);
+    this->currentHealth = 0;
+}
+
 Boss::Boss() = default;
 Boss::Boss(const std::string name) : Monster(name) {
 }
