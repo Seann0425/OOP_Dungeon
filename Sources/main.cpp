@@ -52,13 +52,6 @@ int main() {
     // trading window
     TradingScene trading;
 
-    /* game loop
-    assume scene can be overlapped after clear()
-    while(exploring) {
-        if (fighting) {}
-        else if (trading) {}
-    }
-    */
     std::array<bool, 3> gameStatus{true, false, false}; // explore, fight, trade
     int input, option; // store keyboard input, some choice made by player
     int playerDmg, monsterDmg; // store battle situation

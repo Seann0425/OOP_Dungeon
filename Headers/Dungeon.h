@@ -1,6 +1,7 @@
 #ifndef DUNGEON
 #define DUNGEON
 
+#include <algorithm>
 #include <ctime>
 #include <ncurses/ncurses.h>
 #include <random>

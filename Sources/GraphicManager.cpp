@@ -25,7 +25,6 @@ Scene::Scene() {
     keypad(dialogues, true);
 }
 
-// TODO: update mini_map status, which includes current player room and regular rooms
 void Scene::drawMiniMap(Dungeon *dungeon) {
     wclear(mini_map);
     box(mini_map, 0, 0);
