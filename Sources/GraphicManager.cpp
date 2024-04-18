@@ -358,6 +358,7 @@ void initGraphic() {
     init_pair(RED_PAIR, COLOR_RED, COLOR_BLACK); // test
     init_pair(RED_BACKGROUND, COLOR_WHITE, COLOR_RED); // test
     init_pair(GREEN_PAIR, COLOR_GREEN, COLOR_BLACK);
+    init_pair(YELLOW_PAIR, COLOR_YELLOW, COLOR_BLACK);
 }
 
 const int displayMenu() {
@@ -467,4 +468,24 @@ const std::string inputPlayerName() {
 
 void endGraphic() {
     endwin();
+}
+
+void displayEndAnimation() {
+    int y_max, x_max;
+    getmaxyx(stdscr, y_max, x_max);
+    WINDOW *animation = newwin(20, 90, y_max / 2 - 5, x_max / 2 - 40);
+    refresh();
+    keypad(animation, true);
+    wattron(animation, COLOR_PAIR(YELLOW_PAIR));
+    wprintw(animation, " /$$     /$$ /$$$$$$  /$$   /$$       /$$      /$$  /$$$$$$  /$$   /$$       /$$ /$$\n\
+|  $$   /$$//$$__  $$| $$  | $$      | $$  /$ | $$ /$$__  $$| $$$ | $$      | $$| $$\n\
+ \\  $$ /$$/| $$  \\ $$| $$  | $$      | $$ /$$$| $$| $$  \\ $$| $$$$| $$      | $$| $$\n\
+  \\  $$$$/ | $$  | $$| $$  | $$      | $$/$$ $$ $$| $$  | $$| $$ $$ $$      | $$| $$\n\
+   \\  $$/  | $$  | $$| $$  | $$      | $$$$_  $$$$| $$  | $$| $$  $$$$      |__/|__/\n\
+    | $$   | $$  | $$| $$  | $$      | $$$/ \\  $$$| $$  | $$| $$\\  $$$              \n\
+    | $$   |  $$$$$$/|  $$$$$$/      | $$/   \\  $$|  $$$$$$/| $$ \\  $$       /$$ /$$\n\
+    |__/    \\______/  \\______/       |__/     \\__/ \\______/ |__/  \\__/      |__/|__/");
+    wattroff(animation, COLOR_PAIR(YELLOW_PAIR));
+    mvwprintw(animation, 10, 23, "Press any key to close the game.");
+    wgetch(animation);
 }

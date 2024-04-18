@@ -7,6 +7,7 @@
 #include "Dungeon.h"
 
 #define COLOR_TAKO 8
+#define COLOR_PINK 9
 
 #define TAKO_BACKGROUND 1
 #define REVERSE_PAIR 2
@@ -14,6 +15,8 @@
 #define RED_PAIR 4
 #define RED_BACKGROUND 5
 #define GREEN_PAIR 6
+#define YELLOW_PAIR 7
+#define PINK_PAIR 8
 
 // base class for different scene
 class Scene {
@@ -80,4 +83,5 @@ void endGraphic();
 const int chooseDifficulty();
 const std::string inputPlayerName();
 const std::string readString();
+void displayEndAnimation();
 #endif

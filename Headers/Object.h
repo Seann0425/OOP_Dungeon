@@ -7,6 +7,7 @@ class Object {
 public:
     Object();
     Object(std::string, const std::string);
+    virtual ~Object();
     const std::string getName() const;
     const std::string getTag() const;
 protected:

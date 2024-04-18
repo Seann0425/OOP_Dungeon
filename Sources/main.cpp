@@ -100,7 +100,7 @@ int main() {
 
         // trigger trading
         if (gameStatus[2]) {
-            NPC *npc = static_cast<NPC *>(target);
+            NPC *npc = dynamic_cast<NPC *>(target);
             exploring.clearScene();
             trading.drawVendor(npc);
             trading.drawShop();
@@ -129,12 +129,11 @@ int main() {
                 trading.drawOptions();
             }
             trading.clearScene();
-            // BUG: Run Time Error
             if (npc->checkDead()) deleteObject(npc, player);
         }
         // trigger fighting
         if (gameStatus[1]) {
-            Monster *monster = static_cast<Monster *>(target);
+            Monster *monster = dynamic_cast<Monster *>(target);
             exploring.clearScene();
             fighting.drawMonster(monster);
             fighting.drawOptions();
@@ -166,6 +165,7 @@ int main() {
                 fighting.drawOptions();
                 if (monster->checkDead()) {
                     monster->deathAction(fighting.getDialogues(), gameStatus);
+                    deleteObject(monster, player);
                 }
             }
             fighting.clearScene();
@@ -175,5 +175,9 @@ int main() {
         exploring.drawOptions();
         exploring.drawDialogues();
     }
+    // player won the game
+    exploring.clearScene();
+    displayEndAnimation();
+    endGraphic();
     return 0;
 }
