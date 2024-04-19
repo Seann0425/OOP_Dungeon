@@ -160,7 +160,7 @@ int main() {
                 }
                 fighting.drawOptions();
                 if (monster->checkDead()) {
-                    monster->deathAction(fighting.getDialogues(), gameStatus);
+                    monster->deathAction(fighting.getDialogues(), player, gameStatus);
                     deleteObject(monster, player);
                 }
             }

@@ -23,7 +23,7 @@ public:
     Monster();
     Monster(const std::string);
     Monster(const std::string, int, int, int, int);
-    virtual void deathAction(WINDOW *, std::array<bool, 3> &);
+    virtual void deathAction(WINDOW *, Player *, std::array<bool, 3> &);
 protected:
 };
 
@@ -108,7 +108,7 @@ public:
     static const int steak = 3;
     static const int cookie = 1;
     static const int bottle_of_water = 10;
-    static const int milk = 1;
+    static const int bottle_of_milk = 1;
     Helper();
     Helper(const std::string);
     void activated(WINDOW *, WINDOW *, Player *);
@@ -133,6 +133,6 @@ public:
     Boss();
     Boss(const std::string);
     Boss(const std::string, int, int, int, int);
-    void deathAction(WINDOW *, std::array<bool, 3> &);
+    void deathAction(WINDOW *, Player *, std::array<bool, 3> &);
 };
 #endif

@@ -12,7 +12,7 @@ Monster::Monster(const std::string name) {
 Monster::Monster(const std::string name, int mxHp, int curHp, int atk, int def) : GameCharacter(name, "Monster", mxHp, curHp, atk, def) {
 }
 
-void Monster::deathAction(WINDOW *dialogues, std::array<bool, 3> &gameStatus) {
+void Monster::deathAction(WINDOW *dialogues, Player *player, std::array<bool, 3> &gameStatus) {
     int y, x;
     wprintw(dialogues, "You won the battle!");
     getyx(dialogues, y, x);
@@ -50,7 +50,7 @@ Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX), random_engine(
     sack[2].first->setDescription("Cookies restore 5 hunger <3");
     this->sack[3] = std::make_pair(new Consumable("Bottle of Water", 0, 0, 0, 1, 0, false), 0);
     sack[3].first->setDescription("Restore 1 thirsty.");
-    this->sack[4] = std::make_pair(new Consumable("Milk", 0, 0, 0, 0, 0, true), 0);
+    this->sack[4] = std::make_pair(new Consumable("Bottle of Milk", 0, 0, 0, 0, 0, true), 0);
     sack[4].first->setDescription("Clear debuffs.");
 }
 
@@ -67,7 +67,7 @@ Player::Player(const std::string &name, int mxHP, int curHP, int atk, int def)
     sack[2].first->setDescription("Cookies restore 5 hunger <3");
     this->sack[3] = std::make_pair(new Consumable("Bottle of Water", 0, 0, 0, 1, 0, false), 0);
     sack[3].first->setDescription("Restore 1 thirsty.");
-    this->sack[4] = std::make_pair(new Consumable("Milk", 0, 0, 0, 0, 0, true), 0);
+    this->sack[4] = std::make_pair(new Consumable("Bottle of Milk", 0, 0, 0, 0, 0, true), 0);
     sack[4].first->setDescription("Clear debuffs.");
 }
 
@@ -109,6 +109,12 @@ Room *Player::getRoom() const {
 }
 
 int Player::playerMove(int direction, WINDOW *room) {
+    // update status: hunger, thirsty, poison
+    this->hungering();
+    this->thirsting();
+    this->gettingPoisoned();
+    // dehydration
+    if (this->thirsty == 0 && generator(random_engine) <= 0.8) return -1;
     // return {0, 1, 2, 3} = {up, down, left, right} means moving to which room
     int newRoom = -1; // -1 => not changed
     //  clear original position
@@ -143,10 +149,6 @@ int Player::playerMove(int direction, WINDOW *room) {
         if (coordinate.second < 1) coordinate.second = 1;
         if (coordinate.second > Room::room_width - 2) coordinate.second = Room::room_width - 2;
     }
-    // update status: hunger, thirsty, poison
-    this->hungering();
-    this->thirsting();
-    this->gettingPoisoned();
     return newRoom;
 }
 
@@ -207,6 +209,7 @@ void Player::hungering() {
     if (generator(random_engine) <= 0.02) {
         if (hunger > 0) hunger -= (currentRoom->getEco() == Forest) ? 2 : 1;
         else takeDamage(1);
+        if (hunger < 0) hunger = 0;
     }
 }
 
@@ -214,6 +217,7 @@ void Player::thirsting() {
     if (generator(random_engine) <= 0.02) {
         if (thirsty > 0) thirsty -= (currentRoom->getEco() == Desert) ? 2 : 1;
         else takeDamage(1);
+        if (thirsty < 0) thirsty = 0;
     }
 }
 
@@ -262,7 +266,7 @@ void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     player->addConsumable(1, Helper::steak);
     player->addConsumable(2, Helper::cookie);
     player->addConsumable(3, Helper::bottle_of_water);
-    player->addConsumable(4, Helper::milk);
+    player->addConsumable(4, Helper::bottle_of_milk);
     Equipment *sword = new Equipment("OOP Sword", 0, 90, 999, 999);
     sword->setDescription("Overly OverPowered Sword.");
     player->addEquipment(sword);
@@ -297,9 +301,15 @@ Boss::Boss(const std::string name) : Monster(name) {
 }
 Boss::Boss(const std::string name, int mxHp, int curHp, int atk, int def) : Monster(name, mxHp, curHp, atk, def) {
 }
-void Boss::deathAction(WINDOW *dialogues, std::array<bool, 3> &gameStatus) {
+void Boss::deathAction(WINDOW *dialogues, Player *player, std::array<bool, 3> &gameStatus) {
     int y, x;
     wprintw(dialogues, "You won the battle!");
+    getyx(dialogues, y, x);
+    wmove(dialogues, y + 1, 1);
+    wprintw(dialogues, "%s dropped 10 bottles of water, 10 cookies and 2 bottles of milk.", this->name.c_str());
+    player->addConsumable(2, 10);
+    player->addConsumable(3, 10);
+    player->addConsumable(4, 2);
     getyx(dialogues, y, x);
     wmove(dialogues, y + 1, 1);
     wprintw(dialogues, "Press any key to continue.");
