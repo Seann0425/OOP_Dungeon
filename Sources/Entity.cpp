@@ -304,9 +304,16 @@ void Helper::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     player->addEquipment(sword);
 }
 
-Cat::Cat() = default;
+Cat::Cat() {
+    image = "../assets/cat.txt";
+    imageY = 6;
+    imageX = 11;
+}
 
 Cat::Cat(const std::string name) : NPC(name) {
+    image = "../assets/cat.txt";
+    imageY = 6;
+    imageX = 11;
 }
 void Cat::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 1, 1, "This sweet cutie just gave you a cookie.");
@@ -315,9 +322,16 @@ void Cat::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     player->addConsumable(2, 1);
 }
 
-Tako::Tako() = default;
+Tako::Tako() {
+    image = "../assets/tako.txt";
+    imageY = 7;
+    imageX = 12;
+}
 
 Tako::Tako(const std::string name) : NPC(name) {
+    image = "../assets/tako.txt";
+    imageY = 7;
+    imageX = 12;
 }
 void Tako::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 1, 1, "You found an octopus building the dungeon!!");

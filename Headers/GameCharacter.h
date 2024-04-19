@@ -15,11 +15,17 @@ public:
     int getCurrentHealth() const;
     int getAttack() const;
     int getDefense() const;
+    const char *const getImagePath() const;
+    int getImageY() const;
+    int getImageX() const;
 protected:
     int maxHealth;
     int currentHealth;
     int attack;
     int defense;
+    const char *image = nullptr;
+    int imageY;
+    int imageX;
 };
 
 #endif

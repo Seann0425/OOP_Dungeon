@@ -6,6 +6,7 @@
 #include <ncurses.h>
 #endif
 
+#include <cstring>
 #include <string>
 
 #include "Dungeon.h"

@@ -392,33 +392,25 @@ void TradingScene::drawVendor(const NPC *npc) {
     wattron(vendor, COLOR_PAIR(GREEN_PAIR));
     mvwprintw(vendor, 0, 0, npc->getName().c_str());
     wattroff(vendor, COLOR_PAIR(GREEN_PAIR));
-    // TODO: print npc image
-    // this is currently very poorly implemented
-    if (npc->getName() == "Kitten") {
-        wmove(vendor, 6, 11);
-        wprintw(vendor, "  ^~^  ,");
-        wmove(vendor, 7, 11);
-        wprintw(vendor, " ('Y') )");
-        wmove(vendor, 8, 11);
-        wprintw(vendor, " /   \\/");
-        wmove(vendor, 9, 11);
-        wprintw(vendor, "(\\|||/)");
+    if (npc->getImagePath() == nullptr) {
+        wattron(vendor, COLOR_PAIR(RED_PAIR));
+        mvwprintw(vendor, 1, 1, "An error occured while ");
+        newLine(vendor, y, x);
+        wprintw(vendor, "loading the NPC's image.");
+        wattroff(vendor, COLOR_PAIR(RED_PAIR));
         wrefresh(vendor);
-        return;
-    } else if (npc->getName() == "Tako") {
-        wmove(vendor, 7, 12);
-        wprintw(vendor, " (..)");
-        wmove(vendor, 8, 12);
-        wprintw(vendor, "((()))");
+    } else {
+        std::ifstream stream(npc->getImagePath());
+        std::string image_line;
+        int lines = 0;
+        y = npc->getImageY();
+        x = npc->getImageX();
+        while (std::getline(stream, image_line)) {
+            wmove(vendor, y++, x);
+            wprintw(vendor, image_line.c_str());
+        }
         wrefresh(vendor);
-        return;
     }
-    wattron(vendor, COLOR_PAIR(RED_PAIR));
-    mvwprintw(vendor, 1, 1, "An error occured while ");
-    newLine(vendor, y, x);
-    wprintw(vendor, "loading the NPC's image.");
-    wattroff(vendor, COLOR_PAIR(RED_PAIR));
-    wrefresh(vendor);
 }
 
 void TradingScene::drawShop() {

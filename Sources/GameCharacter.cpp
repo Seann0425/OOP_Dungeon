@@ -39,3 +39,14 @@ int GameCharacter::getAttack() const {
 int GameCharacter::getDefense() const {
     return this->defense;
 }
+
+const char *const GameCharacter::getImagePath() const {
+    return image;
+}
+
+int GameCharacter::getImageY() const {
+    return imageY;
+}
+int GameCharacter::getImageX() const {
+    return imageX;
+}
