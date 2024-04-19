@@ -16,7 +16,11 @@ int main() {
     int row, col;
     while (true) {
         getmaxyx(stdscr, row, col);
-        mvprintw(0, 0, "%d %d", row, col);
+        mvprintw(0, 0, "%d %d\n", row, col);
         refresh();
+        if (getch() == KEY_RESIZE) {
+            printw("resize!");
+            resize_term(0, 0);
+        }
     }
 }
