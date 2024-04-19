@@ -3,7 +3,11 @@
 
 #include <algorithm>
 #include <ctime>
+#ifdef _WIN32
 #include <ncurses/ncurses.h>
+#else
+#include <ncurses.h>
+#endif
 #include <random>
 #include <utility>
 #include <vector>

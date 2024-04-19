@@ -1,7 +1,11 @@
 #ifndef ENTITY
 #define ENTITY
 
+#ifdef _WIN32
 #include <ncurses/ncurses.h>
+#else
+#include <ncurses.h>
+#endif
 #include <random>
 #include <unordered_map>
 #include <utility>
