@@ -1,7 +1,11 @@
 #include <cctype>
 #include <cstdlib>
 #include <cstring>
+#ifdef _WIN32
+#include <ncurses/ncurses.h>
+#else
 #include <ncurses.h>
+#endif
 
 // an interactive program helps the user to resize the terminal
 
