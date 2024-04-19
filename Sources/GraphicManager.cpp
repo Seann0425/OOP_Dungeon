@@ -300,7 +300,7 @@ void ExploringScene::clearScene() {
 
 // ====================fighting====================
 FightingScene::FightingScene() : Scene() {
-    optionButtons = {"Exit", "Retreat", "Status", "Attack"};
+    optionButtons = {"Exit", "Retreat", "Sack", "Inventory", "Status", "Attack"};
     int y_max, x_max;
     getmaxyx(stdscr, y_max, x_max);
     battle = newwin(y_max / 2, y_max, 0, (x_max - y_max) / 2);
@@ -480,7 +480,7 @@ const int displayMenu() {
     WINDOW *menu = newwin(20, 80, y_max / 2 - 5, x_max / 2 - 35);
     refresh();
     keypad(menu, true);
-    wprintw(menu, "/$$$$$$$  /$$   /$$ /$$   /$$  /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$\n\
+    wprintw(menu, " /$$$$$$$  /$$   /$$ /$$   /$$  /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$\n\
 | $$__  $$| $$  | $$| $$$ | $$ /$$__  $$| $$_____/ /$$__  $$| $$$ | $$\n\
 | $$  \\ $$| $$  | $$| $$$$| $$| $$  \\__/| $$      | $$  \\ $$| $$$$| $$\n\
 | $$  | $$| $$  | $$| $$ $$ $$| $$ /$$$$| $$$$$   | $$  | $$| $$ $$ $$\n\

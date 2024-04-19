@@ -144,9 +144,15 @@ int main() {
                         std::swap(gameStatus[0], gameStatus[1]);
                         break;
                     } else if (option == 2) {
-                        fighting.showStatus(player);
+                        fighting.showSack(player);
                         break;
                     } else if (option == 3) {
+                        fighting.showInventory(player);
+                        break;
+                    } else if (option == 4) {
+                        fighting.showStatus(player);
+                        break;
+                    } else if (option == 5) {
                         // poorly implemented
                         playerDmg = (monster->getAttack() - player->getDefense() < 0) ? 0 : monster->getAttack() - player->getDefense();
                         monsterDmg = (player->getAttack() - monster->getDefense() < 0) ? 0 : player->getAttack() - monster->getDefense();
