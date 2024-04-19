@@ -205,13 +205,15 @@ void Player::addEquipment(Equipment *equipment) {
 
 void Player::hungering() {
     if (generator(random_engine) <= 0.02) {
-        hunger--;
+        if (hunger > 0) hunger -= (currentRoom->getEco() == Forest) ? 2 : 1;
+        else takeDamage(1);
     }
 }
 
 void Player::thirsting() {
     if (generator(random_engine) <= 0.02) {
-        thirsty--;
+        if (thirsty > 0) thirsty -= (currentRoom->getEco() == Desert) ? 2 : 1;
+        else takeDamage(1);
     }
 }
 
