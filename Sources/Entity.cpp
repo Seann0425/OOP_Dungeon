@@ -325,10 +325,14 @@ void Tako::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     this->currentHealth = 0;
 }
 
-Boss::Boss() = default;
+Boss::Boss() : Monster() {
+    this->loot_consumable = {0, 0, 10, 10, 2};
+}
 Boss::Boss(const std::string name) : Monster(name) {
+    this->loot_consumable = {0, 0, 10, 10, 2};
 }
 Boss::Boss(const std::string name, int mxHp, int curHp, int atk, int def) : Monster(name, mxHp, curHp, atk, def) {
+    this->loot_consumable = {0, 0, 10, 10, 2};
 }
 void Boss::deathAction(WINDOW *dialogues, Player *player, std::array<bool, 3> &gameStatus) {
     int y, x;
