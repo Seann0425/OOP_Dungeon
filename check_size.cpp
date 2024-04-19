@@ -3,6 +3,7 @@
 #include <cstring>
 #ifdef _WIN32
 #include <ncurses/ncurses.h>
+#include <windows.h>
 #else
 #include <ncurses.h>
 #endif
@@ -35,8 +36,18 @@ int main() {
     const auto *const exit = "(Press Q when done)";
     const auto exit_len = static_cast<int>(std::strlen(exit));
 
+#ifdef _WIN32
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+#endif
+
     while (true) {
+#ifdef _WIN32
+        GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+        col = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+        row = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+#else
         getmaxyx(stdscr, row, col);
+#endif
         if (row != prev_row || col != prev_col) {
             mid_row = row >> 1;
             print_start_col = (col - print_len) >> 1;
