@@ -77,6 +77,10 @@ void Scene::showStatus(const Player *player) {
     newLine(dialogues, y, x);
     wprintw(dialogues, "Thirsty: %d", player->getThirsty());
     newLine(dialogues, y, x);
+    wprintw(dialogues, "Poisoned: ");
+    if (player->getPoisoned().first == 0) wprintw(dialogues, "None");
+    else wprintw(dialogues, "%d Steps, %d DPS", player->getPoisoned().first, player->getPoisoned().second);
+    newLine(dialogues, y, x);
     wprintw(dialogues, "Key: %d", player->checkKey());
     wrefresh(dialogues);
 }

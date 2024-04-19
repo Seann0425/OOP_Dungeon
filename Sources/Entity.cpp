@@ -170,7 +170,7 @@ void Player::useConsumable(size_t id, int amount) {
         this->gotHealed(sack[id].first->getHealth());
         this->hunger += sack[id].first->getHunger();
         this->thirsty += sack[id].first->getThirsty();
-        this->poisoned = std::make_pair(5, sack[id].first->getPoisonous());
+        gotPoisoned(5, sack[id].first->getPoisonous());
         if (sack[id].first->isAntinode()) this->poisoned.first = 0;
     }
 }
@@ -222,6 +222,16 @@ void Player::gettingPoisoned() {
         poisoned.first--;
         takeDamage(poisoned.second);
     }
+}
+
+void Player::gotPoisoned(int time, int dps) {
+    if (dps == 0) return;
+    poisoned.first += time;
+    poisoned.second = std::max(poisoned.second, dps);
+}
+
+const std::pair<int, int> &Player::getPoisoned() const {
+    return poisoned;
 }
 
 Tester::Tester() = default;
@@ -276,6 +286,7 @@ Tako::Tako(const std::string name) : NPC(name) {
 void Tako::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     mvwprintw(dialogues, 1, 1, "You found an octopus building the dungeon!!");
     wgetch(dialogues);
+    player->gotPoisoned(10, 1);
     mvwprintw(dialogues, 2, 1, "He poisoned you and ran away...");
     wgetch(dialogues);
     this->currentHealth = 0;

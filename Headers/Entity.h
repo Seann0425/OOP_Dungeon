@@ -73,9 +73,11 @@ public:
     int getThirsty() const;
     const std::vector<Equipment *> &getInventory() const;
     const std::vector<std::pair<Consumable *, int>> &getSack() const;
-    void hungering(); // not implemented
-    void thirsting(); // not implemented
-    void gettingPoisoned(); // not implemented
+    void hungering();
+    void thirsting();
+    void gettingPoisoned();
+    void gotPoisoned(int, int);
+    const std::pair<int, int> &getPoisoned() const;
 private:
     static int health_initializer;
     static int attack_initializer;
