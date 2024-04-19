@@ -105,6 +105,7 @@ void Dungeon::generateObject() {
     init_room->addObject(helper, 13, 1);
     // boss, probably the only monster in the game
     Boss *boss = new Boss("Deadline", 50, 50, 5, 5);
+    boss->setLootConsumable(0, 0, 10, 10, 2); // TODO: make it better
     boss_room->addObject(boss, 7, 15);
     // cute kitten
     Cat *kitten = new Cat("Kitten");
@@ -112,4 +113,7 @@ void Dungeon::generateObject() {
     // developer himself
     Tako *tako = new Tako("Tako");
     rooms[2][2]->addObject(tako, 13, 28);
+    // just a temporary monster
+    Monster *monster = new Monster("Lab", 20, 20, 3, 3);
+    rooms[1][0]->addObject(monster, 3, 6);
 }

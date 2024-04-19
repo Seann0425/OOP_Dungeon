@@ -23,8 +23,13 @@ public:
     Monster();
     Monster(const std::string);
     Monster(const std::string, int, int, int, int);
+    // extremely poorly implemented
+    void setLootConsumable(int, int, int, int, int);
+    const std::array<int, 5> &getLootConsumable() const;
     virtual void deathAction(WINDOW *, Player *, std::array<bool, 3> &);
 protected:
+    // extremely poorly implemented
+    std::array<int, 5> loot_consumable;
 };
 
 class NPC : public GameCharacter {

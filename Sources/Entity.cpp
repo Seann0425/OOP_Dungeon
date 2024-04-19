@@ -1,15 +1,29 @@
 #include "../Headers/Entity.h"
 
-Monster::Monster() {
+Monster::Monster() : loot_consumable{2, 1, 0, 0, 0} {
     this->tag = "Monster";
 }
 
-Monster::Monster(const std::string name) {
+Monster::Monster(const std::string name) : loot_consumable{2, 1, 0, 0, 0} {
     this->tag = "Monster";
     this->name = name;
 }
 
-Monster::Monster(const std::string name, int mxHp, int curHp, int atk, int def) : GameCharacter(name, "Monster", mxHp, curHp, atk, def) {
+Monster::Monster(const std::string name, int mxHp, int curHp, int atk, int def)
+    : GameCharacter(name, "Monster", mxHp, curHp, atk, def), loot_consumable{2, 1, 0, 0, 0} {
+}
+
+void Monster::setLootConsumable(int bread, int steak, int cookie, int water, int milk) {
+    // super extremely poorly implemented
+    loot_consumable[0] = bread;
+    loot_consumable[1] = steak;
+    loot_consumable[2] = cookie;
+    loot_consumable[3] = water;
+    loot_consumable[4] = milk;
+}
+
+const std::array<int, 5> &Monster::getLootConsumable() const {
+    return this->loot_consumable;
 }
 
 void Monster::deathAction(WINDOW *dialogues, Player *player, std::array<bool, 3> &gameStatus) {
@@ -17,6 +31,21 @@ void Monster::deathAction(WINDOW *dialogues, Player *player, std::array<bool, 3>
     wprintw(dialogues, "You won the battle!");
     getyx(dialogues, y, x);
     wmove(dialogues, y + 1, 1);
+    wprintw(dialogues, "Press any key to continue.");
+    wgetch(dialogues);
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    wprintw(dialogues, "Rewards: ");
+    getyx(dialogues, y, x);
+    wmove(dialogues, y + 1, 1);
+    for (size_t i = 0; i < loot_consumable.size(); i++) {
+        if (loot_consumable[i] == 0) continue;
+        wprintw(dialogues, "%s x%d", player->getSack()[i].first->getName().c_str(), loot_consumable[i]);
+        player->addConsumable(i, loot_consumable[i]);
+        getyx(dialogues, y, x);
+        wmove(dialogues, y + 1, 1);
+    }
     wprintw(dialogues, "Press any key to continue.");
     wgetch(dialogues);
     std::swap(gameStatus[0], gameStatus[1]);
@@ -306,12 +335,21 @@ void Boss::deathAction(WINDOW *dialogues, Player *player, std::array<bool, 3> &g
     wprintw(dialogues, "You won the battle!");
     getyx(dialogues, y, x);
     wmove(dialogues, y + 1, 1);
-    wprintw(dialogues, "%s dropped 10 bottles of water, 10 cookies and 2 bottles of milk.", this->name.c_str());
-    player->addConsumable(2, 10);
-    player->addConsumable(3, 10);
-    player->addConsumable(4, 2);
+    wprintw(dialogues, "Press any key to continue.");
+    wgetch(dialogues);
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wmove(dialogues, 1, 1);
+    wprintw(dialogues, "Rewards: ");
     getyx(dialogues, y, x);
     wmove(dialogues, y + 1, 1);
+    for (size_t i = 0; i < loot_consumable.size(); i++) {
+        if (loot_consumable[i] == 0) continue;
+        wprintw(dialogues, "%s x%d", player->getSack()[i].first->getName().c_str(), loot_consumable[i]);
+        player->addConsumable(i, loot_consumable[i]);
+        getyx(dialogues, y, x);
+        wmove(dialogues, y + 1, 1);
+    }
     wprintw(dialogues, "Press any key to continue.");
     wgetch(dialogues);
     gameStatus[1] = false;
