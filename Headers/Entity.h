@@ -95,7 +95,6 @@ private:
     std::pair<int, int> poisoned; // time / damage
     std::pair<int, int> coordinate; // y, x
     bool hasKey;
-    // randomized status update
     std::default_random_engine random_engine;
     std::uniform_real_distribution<double> generator;
 };

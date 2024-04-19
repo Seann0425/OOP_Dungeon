@@ -26,7 +26,7 @@ Dungeon::Dungeon() : rooms(3, std::vector<Room *>(3)) {
 void Dungeon::initGame() {
     // trivial random number generator to set ecosystem
     std::random_device generator;
-    std::vector<int> ecos{0, 0, 0, 1, 1, 1, 2, 2, 2};
+    std::vector<int> ecos{0, 0, 0, 1, 1, 1, 1, 2, 2};
     std::shuffle(ecos.begin(), ecos.end(), generator);
     size_t idx = 0;
     for (auto &room_seq : rooms) {

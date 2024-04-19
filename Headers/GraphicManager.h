@@ -9,6 +9,7 @@
 #include <string>
 
 #include "Dungeon.h"
+#include "FileManager.h"
 
 #define COLOR_TAKO 10
 #define COLOR_PINK 11

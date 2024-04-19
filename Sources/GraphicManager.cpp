@@ -480,14 +480,7 @@ const int displayMenu() {
     WINDOW *menu = newwin(20, 80, y_max / 2 - 5, x_max / 2 - 35);
     refresh();
     keypad(menu, true);
-    wprintw(menu, " /$$$$$$$  /$$   /$$ /$$   /$$  /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$\n\
-| $$__  $$| $$  | $$| $$$ | $$ /$$__  $$| $$_____/ /$$__  $$| $$$ | $$\n\
-| $$  \\ $$| $$  | $$| $$$$| $$| $$  \\__/| $$      | $$  \\ $$| $$$$| $$\n\
-| $$  | $$| $$  | $$| $$ $$ $$| $$ /$$$$| $$$$$   | $$  | $$| $$ $$ $$\n\
-| $$  | $$| $$  | $$| $$  $$$$| $$|_  $$| $$__/   | $$  | $$| $$  $$$$\n\
-| $$  | $$| $$  | $$| $$\\  $$$| $$  \\ $$| $$      | $$  | $$| $$\\  $$$\n\
-| $$$$$$$/|  $$$$$$/| $$ \\  $$|  $$$$$$/| $$$$$$$$|  $$$$$$/| $$ \\  $$\n\
-|_______/  \\______/ |__/  \\__/ \\______/ |________/ \\______/ |__/  \\__/\n");
+    wprintw(menu, "%s", readWholeFile("../assets/dungeon_title.txt").c_str());
     wrefresh(menu);
 
     std::array<std::string, 3> options{"Start", "Difficulty", "Exit"};
@@ -590,14 +583,7 @@ void displayEndAnimation() {
     refresh();
     keypad(animation, true);
     wattron(animation, COLOR_PAIR(YELLOW_PAIR));
-    wprintw(animation, " /$$     /$$ /$$$$$$  /$$   /$$       /$$      /$$  /$$$$$$  /$$   /$$       /$$ /$$\n\
-|  $$   /$$//$$__  $$| $$  | $$      | $$  /$ | $$ /$$__  $$| $$$ | $$      | $$| $$\n\
- \\  $$ /$$/| $$  \\ $$| $$  | $$      | $$ /$$$| $$| $$  \\ $$| $$$$| $$      | $$| $$\n\
-  \\  $$$$/ | $$  | $$| $$  | $$      | $$/$$ $$ $$| $$  | $$| $$ $$ $$      | $$| $$\n\
-   \\  $$/  | $$  | $$| $$  | $$      | $$$$_  $$$$| $$  | $$| $$  $$$$      |__/|__/\n\
-    | $$   | $$  | $$| $$  | $$      | $$$/ \\  $$$| $$  | $$| $$\\  $$$              \n\
-    | $$   |  $$$$$$/|  $$$$$$/      | $$/   \\  $$|  $$$$$$/| $$ \\  $$       /$$ /$$\n\
-    |__/    \\______/  \\______/       |__/     \\__/ \\______/ |__/  \\__/      |__/|__/");
+    wprintw(animation, "%s", readWholeFile("../assets/you_win.txt").c_str());
     wattroff(animation, COLOR_PAIR(YELLOW_PAIR));
     mvwprintw(animation, 10, 23, "Press any key to close the game.");
     wgetch(animation);

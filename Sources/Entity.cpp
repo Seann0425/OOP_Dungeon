@@ -255,6 +255,9 @@ void Player::gettingPoisoned() {
         poisoned.first--;
         takeDamage(poisoned.second);
     }
+    if (currentRoom->getEco() == Swamp && generator(random_engine) <= 0.05) {
+        gotPoisoned(2, 2);
+    }
 }
 
 void Player::gotPoisoned(int time, int dps) {
