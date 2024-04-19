@@ -31,7 +31,8 @@ public:
     void drawOptions();
     void showStatus(const Player *);
     void showInventory(const Player *);
-    void showSack(const Player *);
+    void showSack(Player *);
+    void inSack(Player *);
     int inOptions();
     WINDOW *getDialogues();
     virtual void clearScene() = 0;

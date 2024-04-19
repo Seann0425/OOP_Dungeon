@@ -55,8 +55,9 @@ public:
     static void health_init(int);
     static void attack_init(int);
     static void defense_init(int);
-    void addEquipment(Equipment *); // not implemented
-    void addConsumable(size_t, int); // not implemented
+    void addEquipment(Equipment *);
+    void addConsumable(size_t, int);
+    void useConsumable(size_t, int);
     void changeStatus(int); // equipment for atk or def, not implemented
     void setRoom(Room *);
     void setCoordinate(int, int);

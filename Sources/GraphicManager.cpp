@@ -23,6 +23,7 @@ Scene::Scene() {
     box(dialogues, 0, 0);
     wrefresh(dialogues);
     keypad(dialogues, true);
+    keypad(buttons, true);
 }
 
 void Scene::drawMiniMap(Dungeon *dungeon) {
@@ -99,7 +100,7 @@ void Scene::showInventory(const Player *player) {
     wrefresh(dialogues);
 }
 
-void Scene::showSack(const Player *player) {
+void Scene::showSack(Player *player) {
     int y, x;
     wclear(dialogues);
     box(dialogues, 0, 0);
@@ -109,6 +110,75 @@ void Scene::showSack(const Player *player) {
         newLine(dialogues, y, x);
         wprintw(dialogues, "%s", consumable->getDescription().c_str());
         newLine(dialogues, y, x);
+    }
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Press X to leave.");
+    newLine(dialogues, y, x);
+    wprintw(dialogues, "Press Enter to use items.");
+    wrefresh(dialogues);
+    inSack(player);
+    wclear(dialogues);
+    box(dialogues, 0, 0);
+    wrefresh(dialogues);
+}
+
+// TODO: make it look better
+void Scene::inSack(Player *player) {
+    int y, x, input;
+    size_t curFood = 0;
+    bool check = false;
+    const std::vector<std::pair<Consumable *, int>> &sack = player->getSack();
+    while ((input = wgetch(dialogues))) {
+        switch (input) {
+        case 120: // X
+            return;
+        case 10: // Enter
+            check = true;
+            break;
+        default:
+            break;
+        }
+        if (check) break;
+    }
+    check = false;
+    while (true) {
+        wclear(dialogues);
+        box(dialogues, 0, 0);
+        wmove(dialogues, 1, 1);
+        for (size_t i = 0; i < sack.size(); i++) {
+            if (i == curFood) wattron(dialogues, A_REVERSE);
+            wprintw(dialogues, "%s: %d", sack[i].first->getName().c_str(), sack[i].second);
+            newLine(dialogues, y, x);
+            wprintw(dialogues, "%s", sack[i].first->getDescription().c_str());
+            newLine(dialogues, y, x);
+            wattroff(dialogues, A_REVERSE);
+        }
+        getmaxyx(dialogues, y, x);
+        if (check) {
+            check = false;
+            mvwprintw(dialogues, y - 2, 1, "You used 1 %s!", sack[curFood].first->getName().c_str());
+        } else {
+            mvwprintw(dialogues, y - 3, 1, "Press X to leave.");
+            mvwprintw(dialogues, y - 2, 1, "Press Enter to use items.");
+        }
+        input = wgetch(dialogues);
+        switch (input) {
+        case KEY_UP:
+            if (curFood == 0) break;
+            curFood--;
+            break;
+        case KEY_DOWN:
+            if (curFood == sack.size() - 1ull) break;
+            curFood++;
+            break;
+        default:
+            break;
+        }
+        if (input == 120) return;
+        if (input == 10) {
+            check = true;
+            player->useConsumable(curFood, 1);
+        }
     }
     wrefresh(dialogues);
 }
@@ -131,7 +201,7 @@ int Scene::inOptions() {
         keyPressed = wgetch(buttons);
         switch (keyPressed) {
         case KEY_UP:
-            if (curButton == optionButtons.size() - 1) break;
+            if (curButton == optionButtons.size() - 1ull) break;
             curButton++;
             break;
         case KEY_DOWN:

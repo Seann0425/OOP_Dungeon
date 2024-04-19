@@ -158,6 +158,10 @@ void Player::addConsumable(size_t id, int amount) {
     this->sack[id].second += amount;
 }
 
+void Player::useConsumable(size_t id, int amount) {
+    this->sack[id].second -= amount;
+}
+
 int Player::getHunger() const {
     return this->hunger;
 }
