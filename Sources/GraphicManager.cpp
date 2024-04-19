@@ -156,7 +156,8 @@ void Scene::inSack(Player *player) {
         getmaxyx(dialogues, y, x);
         if (check) {
             check = false;
-            mvwprintw(dialogues, y - 2, 1, "You used 1 %s!", sack[curFood].first->getName().c_str());
+            if (sack[curFood].second == 0) mvwprintw(dialogues, y - 2, 1, "You don't have any %s left!", sack[curFood].first->getName().c_str());
+            else mvwprintw(dialogues, y - 2, 1, "You used 1 %s!", sack[curFood].first->getName().c_str());
         } else {
             mvwprintw(dialogues, y - 3, 1, "Press X to leave.");
             mvwprintw(dialogues, y - 2, 1, "Press Enter to use items.");
@@ -177,7 +178,7 @@ void Scene::inSack(Player *player) {
         if (input == 120) return;
         if (input == 10) {
             check = true;
-            player->useConsumable(curFood, 1);
+            if (sack[curFood].second > 0) player->useConsumable(curFood, 1);
         }
     }
     wrefresh(dialogues);
