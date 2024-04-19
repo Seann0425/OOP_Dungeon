@@ -6,6 +6,7 @@
 #else
 #include <ncurses.h>
 #endif
+#include <ctime>
 #include <random>
 #include <unordered_map>
 #include <utility>
@@ -74,6 +75,7 @@ public:
     const std::vector<std::pair<Consumable *, int>> &getSack() const;
     void hungering(); // not implemented
     void thirsting(); // not implemented
+    void gettingPoisoned(); // not implemented
 private:
     static int health_initializer;
     static int attack_initializer;
@@ -86,6 +88,9 @@ private:
     std::pair<int, int> poisoned; // time / damage
     std::pair<int, int> coordinate; // y, x
     bool hasKey;
+    // randomized status update
+    std::default_random_engine random_engine;
+    std::uniform_real_distribution<double> generator;
 };
 
 class Tester : public NPC {

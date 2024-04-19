@@ -37,7 +37,7 @@ void NPC::activated(WINDOW *shop, WINDOW *dialogues, Player *player) {
     wgetch(dialogues);
 }
 
-Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX) {
+Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX), random_engine(time(NULL)), generator(0.0, 1.0) {
     this->tag = "Player";
     hasKey = false;
     hunger = Player::HUNGER_MAX;
@@ -55,7 +55,7 @@ Player::Player() : GameCharacter(), sack(Player::CONSUMABLE_MAX) {
 }
 
 Player::Player(const std::string &name, int mxHP, int curHP, int atk, int def)
-    : GameCharacter(name, "Player", mxHP, curHP, atk, def), sack(Player::CONSUMABLE_MAX) {
+    : GameCharacter(name, "Player", mxHP, curHP, atk, def), sack(Player::CONSUMABLE_MAX), random_engine(time(NULL)), generator(0.0, 1.0) {
     hasKey = false;
     hunger = Player::HUNGER_MAX;
     thirsty = Player::THIRSTY_MAX;
@@ -143,6 +143,10 @@ int Player::playerMove(int direction, WINDOW *room) {
         if (coordinate.second < 1) coordinate.second = 1;
         if (coordinate.second > Room::room_width - 2) coordinate.second = Room::room_width - 2;
     }
+    // update status: hunger, thirsty, poison
+    this->hungering();
+    this->thirsting();
+    this->gettingPoisoned();
     return newRoom;
 }
 
@@ -155,11 +159,20 @@ void Player::setKey(bool has) {
 }
 
 void Player::addConsumable(size_t id, int amount) {
+    if (amount <= 0) return;
     this->sack[id].second += amount;
 }
 
 void Player::useConsumable(size_t id, int amount) {
+    if (amount <= 0) return;
     this->sack[id].second -= amount;
+    for (int i = 0; i < amount; i++) {
+        this->gotHealed(sack[id].first->getHealth());
+        this->hunger += sack[id].first->getHunger();
+        this->thirsty += sack[id].first->getThirsty();
+        this->poisoned = std::make_pair(5, sack[id].first->getPoisonous());
+        if (sack[id].first->isAntinode()) this->poisoned.first = 0;
+    }
 }
 
 int Player::getHunger() const {
@@ -188,6 +201,25 @@ void Player::addEquipment(Equipment *equipment) {
     this->currentHealth += equipment->getHealth();
     this->attack += equipment->getAttack();
     this->defense += equipment->getDefense();
+}
+
+void Player::hungering() {
+    if (generator(random_engine) <= 0.02) {
+        hunger--;
+    }
+}
+
+void Player::thirsting() {
+    if (generator(random_engine) <= 0.02) {
+        thirsty--;
+    }
+}
+
+void Player::gettingPoisoned() {
+    if (poisoned.first > 0) {
+        poisoned.first--;
+        takeDamage(poisoned.second);
+    }
 }
 
 Tester::Tester() = default;
