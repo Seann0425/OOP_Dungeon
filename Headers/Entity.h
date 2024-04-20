@@ -36,11 +36,6 @@ class NPC : public GameCharacter {
 public:
     NPC();
     NPC(const std::string);
-    void listCommodity();
-    // take commodity id as parameter and return successful or not
-    bool sellItem(int);
-    // return successful or not since some items might not be sellable
-    bool buyItem();
     virtual void activated(WINDOW *, WINDOW *, Player *);
 private:
     std::unordered_map<std::string, std::string> scripts; // not sure if vector is better
