@@ -52,8 +52,8 @@ Player *Dungeon::getPlayer() const {
 
 void Dungeon::changeRoom(int direction, WINDOW *dialogues) {
     // {0, 1, 2, 3} -> {up, down, left, right}
-    std::pair<int, int> &roomIdx = current_room_idx;
-    int originY = roomIdx.first, originX = roomIdx.second;
+    std::pair<size_t, size_t> &roomIdx = current_room_idx;
+    auto [originY, originX] = roomIdx;
     switch (direction) {
     case 0:
         roomIdx.first--;
