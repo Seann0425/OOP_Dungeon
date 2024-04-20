@@ -34,7 +34,7 @@ private:
     Room *boss_room;
     Room *key_room;
     Room *init_room;
-    std::pair<int, int> current_room_idx;
+    std::pair<size_t, size_t> current_room_idx;
 };
 
 #endif
