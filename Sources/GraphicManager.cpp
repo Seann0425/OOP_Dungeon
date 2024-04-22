@@ -353,11 +353,11 @@ void FightingScene::updateSituation(Player *player, Monster *monster, int player
     wclear(dialogues);
     box(dialogues, 0, 0);
     wmove(dialogues, 1, 1);
-    wprintw(dialogues, "You dealed %d points of damage!", monsterDmg);
+    wprintw(dialogues, "You dealt %d points of damage!", monsterDmg);
     newLine(dialogues, y, x);
     wprintw(dialogues, "%s is now %d/%d", monster->getName().c_str(), monster->getCurrentHealth(), monster->getMaxHealth());
     newLine(dialogues, y, x);
-    wprintw(dialogues, "%s dealed %d points of damage!", monster->getName().c_str(), playerDmg);
+    wprintw(dialogues, "%s dealt %d points of damage!", monster->getName().c_str(), playerDmg);
     newLine(dialogues, y, x);
     wprintw(dialogues, "You are now %d/%d", player->getCurrentHealth(), player->getMaxHealth());
     newLine(dialogues, y, x);
