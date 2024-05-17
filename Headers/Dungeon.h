@@ -19,11 +19,15 @@ class Dungeon {
 public:
     // generate rooms, set the adjacent relationship between rooms
     Dungeon();
-    // generate player, put player into the starting room
-    // set each room its utility, such as boss room, different eco
-    // or the room that contains the key to the boss room
+    /**
+     * @brief Initialize some settings for the dungeon
+     */
     void initGame();
-    void createPlayer(const std::string &);
+    /**
+     * @brief Create a Player object and put the player into the starting room
+     * @param name Player's name
+     */
+    void createPlayer(const std::string &name);
     Player *getPlayer() const;
     const std::pair<int, int> getCurrentIndex() const;
     void changeRoom(int, WINDOW *);
